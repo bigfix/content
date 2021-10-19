@@ -3,7 +3,7 @@
 
 This folder contains custom BigFix dashboards that can be loaded though the "Debug -> Load Wizard..." menu or added directly as a file to a custom site.
 
-## Current contents:
+## Dashboards:
 
 - `BFLabsMaintenanceWindows.ojo` 
  
