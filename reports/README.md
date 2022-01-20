@@ -1,7 +1,7 @@
 
 # Custom BigFix Web Reports 
 
-This folder contains custom BigFix Web Reports that can be loaded though the "Report List -> Import Report" link in BigFix Web Reports
+This folder contains custom BigFix Web Reports that can be loaded though the "Report List -> Import Report" link in the BigFix Web Reports application.
 
 ## Reports
 
