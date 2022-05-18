@@ -1,0 +1,272 @@
+<head>
+<!--
+
+Trigger:  
+
+Activity Trigger:
+Generate report every X minutes
+Generate report when relevance evaluates to true
+Relevance: (number of bes actions whose (1=1 and ( (exist action script of it and (action script of it as lowercase contains "notify client forcerefresh") and time issued of it > (now - (1440 * minute) ) )) )) > 0 
+Evaluation: False
+Send email/store archive only when report has changed
+Activity Report (HTML):
+Report: _Scheduled Report - (Alert) Action with notify client - WARNING (administrator)
+
+-->
+<style>
+.CSSTableGenerator {
+	margin:0px;padding:0px;
+	width:100%;
+	box-shadow: 10px 10px 5px #888888;
+	border:1px solid #000000;
+	
+	-moz-border-radius-bottomleft:0px;
+	-webkit-border-bottom-left-radius:0px;
+	border-bottom-left-radius:0px;
+	
+	-moz-border-radius-bottomright:0px;
+	-webkit-border-bottom-right-radius:0px;
+	border-bottom-right-radius:0px;
+	
+	-moz-border-radius-topright:0px;
+	-webkit-border-top-right-radius:0px;
+	border-top-right-radius:0px;
+	
+	-moz-border-radius-topleft:0px;
+	-webkit-border-top-left-radius:0px;
+	border-top-left-radius:0px;
+}.CSSTableGenerator table{
+    border-collapse: collapse;
+        border-spacing: 0;
+	width:100%;
+	height:100%;
+	margin:0px;padding:0px;
+}.CSSTableGenerator tr:last-child td:last-child {
+	-moz-border-radius-bottomright:0px;
+	-webkit-border-bottom-right-radius:0px;
+	border-bottom-right-radius:0px;
+}
+.CSSTableGenerator table tr:first-child td:first-child {
+	-moz-border-radius-topleft:0px;
+	-webkit-border-top-left-radius:0px;
+	border-top-left-radius:0px;
+}
+.CSSTableGenerator table tr:first-child td:last-child {
+	-moz-border-radius-topright:0px;
+	-webkit-border-top-right-radius:0px;
+	border-top-right-radius:0px;
+}.CSSTableGenerator tr:last-child td:first-child{
+	-moz-border-radius-bottomleft:0px;
+	-webkit-border-bottom-left-radius:0px;
+	border-bottom-left-radius:0px;
+}.CSSTableGenerator tr:hover td{
+	
+}
+.CSSTableGenerator tr:nth-child(odd){ background-color:#aad4ff; }
+.CSSTableGenerator tr:nth-child(even)    { background-color:#ffffff; }.CSSTableGenerator td{
+	vertical-align:middle;
+	
+	
+	border:1px solid #000000;
+	border-width:0px 1px 1px 0px;
+	text-align:left;
+	padding:7px;
+	font-size:10px;
+	font-family:Arial;
+	font-weight:normal;
+	color:#000000;
+}.CSSTableGenerator tr:last-child td{
+	border-width:0px 1px 0px 0px;
+}.CSSTableGenerator tr td:last-child{
+	border-width:0px 0px 1px 0px;
+}.CSSTableGenerator tr:last-child td:last-child{
+	border-width:0px 0px 0px 0px;
+}
+.CSSTableGenerator tr:first-child td{
+		background:-o-linear-gradient(bottom, #005fbf 5%, #003f7f 100%);	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #005fbf), color-stop(1, #003f7f) );
+	background:-moz-linear-gradient( center top, #005fbf 5%, #003f7f 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#005fbf", endColorstr="#003f7f");	background: -o-linear-gradient(top,#005fbf,003f7f);
+
+	background-color:#005fbf;
+	border:0px solid #000000;
+	text-align:center;
+	border-width:0px 0px 1px 1px;
+	font-size:14px;
+	font-family:Arial;
+	font-weight:bold;
+	color:#ffffff;
+}
+.CSSTableGenerator tr:first-child:hover td{
+	background:-o-linear-gradient(bottom, #005fbf 5%, #003f7f 100%);	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #005fbf), color-stop(1, #003f7f) );
+	background:-moz-linear-gradient( center top, #005fbf 5%, #003f7f 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#005fbf", endColorstr="#003f7f");	background: -o-linear-gradient(top,#005fbf,003f7f);
+
+	background-color:#005fbf;
+}
+.CSSTableGenerator tr:first-child td:first-child{
+	border-width:0px 0px 1px 0px;
+}
+.CSSTableGenerator tr:first-child td:last-child{
+	border-width:0px 0px 1px 1px;
+}
+</style>
+</head>
+
+ <body>
+<h2><font color=red>Scheduled Notification - Warning Customer has taken actions containing notify client forcerefresh</font></h2>
+
+
+
+<span><b>Alert Description:</b> This alert if to inform the Bigfix Support Team of an Actions that has been recently issued containing client refresh commands.</span>
+</br>
+<span><b>Signature Information:</b> This Report relies upon a scheduled activity that occurs every X minutes to detect if the client action issue time has changed for actions that contain the notify client forcerefresh command, The Report will return results for only these actions that have been issued within the last 1440 minutes. </span>
+<br>
+	<span>Important Note: Understand you may recieve multiple notifications for a given event.</span>
+<br>
+<span><b>Total Actions issued within last day with the <font color = red> "notify client forcerefresh"</font> statement within the action: </b> <?Relevance Number of bes actions whose ( (exist action script of it and (action script of it as lowercase contains "notify client forcerefresh") and time issued of it > (now - (1440 * minute) ) )) ?> </span>
+<br>
+<span><b>Total Actions issued within last day </b> <?Relevance Number of bes actions whose ((time issued of it) > (now - ( 1440 * minute))) ?> </span>
+
+<br>
+
+
+<span><b>Report Generated @ </b> <?Relevance now  ?></span>
+<br>
+<br>
+
+<div class="CSSTableGenerator" >
+<table id="resultsTble" class="sortable">
+
+
+<table id="resultsTble" class="sortable" border=1>
+<tr>
+	<td>Action ID</td>
+	<td>Action Name</td>
+	<td>Action Details</td>
+
+	<td>Flags of Action</td>
+
+	
+	<td>Action Script</td>
+	<td>Target Relevance</td>	
+</tr>
+
+
+<?Relevance
+concatenation of ( trs of ( 
+td of (id of it as string)
+& td of ((if (exist name of it )then (name of it)  else ("no-name")) as string)
+& td of (
+	
+	b of ("Action State: ") & (if (exists state of it) then ( state of it) else "No Issuer")  & br & br
+	& b  of ("Issuer: ") & (if (exists issuer of it) then (name of issuer of it) else "No Issuer") & br & br
+    & b  of ("Stopper: ") & (If Exists (stopper of it) then (name of stopper of it as string) else "No Stopper") & br & br
+	& b  of ("Targeting Method: ") & (if (exists targeting method  of it) then (( targeting method of it) as string) else "No targeting method")  & br & br
+	& b  of ("Number of Action Results: ") & (number of results of it as string) & br & br 	
+	& b  of (  "Start Time: ") & concatenation of  (if (exists start dates of it) then (start dates of it) as string Else "No Start Date Defined") & br & br
+	& b  of (  "End time: ") & concatenation of (if (exists end dates of it) then (end dates of it) as string else "No End Date") & br & br
+	& b  of ( "Time issued: ") & concatenation of (if (exists time issued of it) then (time issued of it) as string else "No-Issued time") 
+) 
+
+& td of 
+ (
+       b of ("Hidden Flag: ") & (hidden flag of it as string)  & br & br
+	&  b of ("Management Rights Flag: ") & (management rights flag of it as string)  & br & br
+	&  b of ("Operator Rights Flag: ") &    (operator site flag of it as string)   & br & br
+	&  b of ("Reapply Flag: ") &    (reapply flag of it as string)  & br & br
+	&  b of ("Restart Flag: ") &  (restart flag of it as string)  & br & br
+	&  b of ("Urgent Flag: ") &   (urgent flag of it as string)  & br & br
+	&  b of ("Multiple Flag: ") & (multiple flag of it as string) & br & br
+    &  b of ("Computer Group Flag: ") & (computer group flag of it as string) 
+)
+
+& td of (if (exists (action script of it)) then (action script of it ) else "//no action script")
+& td of (if (exists targeting relevance of it) then (targeting relevance of it as string) else "No Targeting Relevance") 
+
+ )) of bes actions whose (1=1 and 
+		( (exist action script of it and (action script of it as lowercase contains "notify client forcerefresh") and time issued of it > (now - (1440 * minute) ) ))
+	)
+
+?>
+
+
+</table>
+</div>
+
+<br>
+<br>
+
+<span><b>Signature Information:</b> This Report relies will return results ALL actions with the notify client forcerefresh command. </span>
+<br>
+	<span>Important Note: Understand you may recieve multiple notifications for a given event.</span>
+<br>
+<span><b>Total Actions issued with the <font color = red> "notify client forcerefresh"</font> statement within the action: </b> <?Relevance Number of bes actions whose ( (exist action script of it and (action script of it as lowercase contains "notify client forcerefresh") )) ?> </span>
+
+<br>
+<br>
+
+
+<div class="CSSTableGenerator" >
+<table id="resultsTble" class="sortable">
+
+
+<table id="resultsTble" class="sortable" border=1>
+<tr>
+	<td>Action ID</td>
+	<td>Action Name</td>
+	<td>Action Details</td>
+
+	<td>Flags of Action</td>
+
+	
+	<td>Action Script</td>
+	<td>Target Relevance</td>	
+</tr>
+
+<?Relevance
+concatenation of ( trs of ( 
+td of (id of it as string)
+& td of ((if (exist name of it )then (name of it)  else ("no-name")) as string)
+& td of (
+	
+	b of ("Action State: ") & (if (exists state of it) then ( state of it) else "No Issuer")  & br & br
+	& b  of ("Issuer: ") & (if (exists issuer of it) then (name of issuer of it) else "No Issuer") & br & br
+    & b  of ("Stopper: ") & (If Exists (stopper of it) then (name of stopper of it as string) else "No Stopper") & br & br
+	& b  of ("Targeting Method: ") & (if (exists targeting method  of it) then (( targeting method of it) as string) else "No targeting method")  & br & br
+	& b  of ("Number of Action Results: ") & (number of results of it as string) & br & br 	
+	& b  of (  "Start Time: ") & concatenation of  (if (exists start dates of it) then (start dates of it) as string Else "No Start Date Defined") & br & br
+	& b  of (  "End time: ") & concatenation of (if (exists end dates of it) then (end dates of it) as string else "No End Date") & br & br
+	& b  of ( "Time issued: ") & concatenation of (if (exists time issued of it) then (time issued of it) as string else "No-Issued time") 
+) 
+
+& td of 
+ (
+       b of ("Hidden Flag: ") & (hidden flag of it as string)  & br & br
+	&  b of ("Management Rights Flag: ") & (management rights flag of it as string)  & br & br
+	&  b of ("Operator Rights Flag: ") &    (operator site flag of it as string)   & br & br
+	&  b of ("Reapply Flag: ") &    (reapply flag of it as string)  & br & br
+	&  b of ("Restart Flag: ") &  (restart flag of it as string)  & br & br
+	&  b of ("Urgent Flag: ") &   (urgent flag of it as string)  & br & br
+	&  b of ("Multiple Flag: ") & (multiple flag of it as string) & br & br
+    &  b of ("Computer Group Flag: ") & (computer group flag of it as string) 
+)
+
+& td of (if (exists (action script of it)) then (action script of it ) else "//no action script")
+& td of (if (exists targeting relevance of it) then (targeting relevance of it as string) else "No Targeting Relevance") 
+
+ )) of bes actions whose (
+		 (exist action script of it and (action script of it as lowercase contains "notify client forcerefresh") )
+	)
+
+?>
+
+</table>
+</div>
+
+
+
+<br>
+<span><font size=1>Provided with no warranty or support</font></span>
+<span><font size=1>v2</font></span>
+
+ </body>

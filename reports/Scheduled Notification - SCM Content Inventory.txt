@@ -1,0 +1,249 @@
+<!--
+Activity Triggers Definition:
+Generate report every: 15 minutes
+
+Match Relevance conditions 
+
+md5 of concatenations of 
+ (((maximum of (creation time of it) of fixlets whose (exist (creation time of it) AND (NOT (custom site flag of it))   AND (NOT (operator site flag of it))) of bes sites) as string);
+ ((maximum of (modification time of it) of fixlets whose (exist (modification time of it) AND (NOT (custom site flag of it)) AND (NOT (operator site flag of it))   ) of bes sites) as string);
+(maximum of (mime field "x-fixlet-first-propagation" of it as time) of bes fixlets whose ((exist (mime field whose (name of it = "x-fixlet-first-propagation" and exist (value whose (exist (it as string as time))of it)) of it))) as string))
+
+Generate report when answer changes
+Include trigger information 
+-->
+
+
+<style>
+.CSSTableGenerator {
+	margin:0px;padding:0px;
+	width:100%;
+	box-shadow: 10px 10px 5px #888888;
+	border:1px solid #000000;
+	
+	-moz-border-radius-bottomleft:0px;
+	-webkit-border-bottom-left-radius:0px;
+	border-bottom-left-radius:0px;
+	
+	-moz-border-radius-bottomright:0px;
+	-webkit-border-bottom-right-radius:0px;
+	border-bottom-right-radius:0px;
+	
+	-moz-border-radius-topright:0px;
+	-webkit-border-top-right-radius:0px;
+	border-top-right-radius:0px;
+	
+	-moz-border-radius-topleft:0px;
+	-webkit-border-top-left-radius:0px;
+	border-top-left-radius:0px;
+}.CSSTableGenerator table{
+    border-collapse: collapse;
+        border-spacing: 0;
+	width:100%;
+	height:100%;
+	margin:0px;padding:0px;
+}.CSSTableGenerator tr:last-child td:last-child {
+	-moz-border-radius-bottomright:0px;
+	-webkit-border-bottom-right-radius:0px;
+	border-bottom-right-radius:0px;
+}
+.CSSTableGenerator table tr:first-child td:first-child {
+	-moz-border-radius-topleft:0px;
+	-webkit-border-top-left-radius:0px;
+	border-top-left-radius:0px;
+}
+.CSSTableGenerator table tr:first-child td:last-child {
+	-moz-border-radius-topright:0px;
+	-webkit-border-top-right-radius:0px;
+	border-top-right-radius:0px;
+}.CSSTableGenerator tr:last-child td:first-child{
+	-moz-border-radius-bottomleft:0px;
+	-webkit-border-bottom-left-radius:0px;
+	border-bottom-left-radius:0px;
+}.CSSTableGenerator tr:hover td{
+	
+}
+.CSSTableGenerator tr:nth-child(odd){ background-color:#aad4ff; }
+.CSSTableGenerator tr:nth-child(even)    { background-color:#ffffff; }.CSSTableGenerator td{
+	vertical-align:middle;
+	
+	
+	border:1px solid #000000;
+	border-width:0px 1px 1px 0px;
+	text-align:left;
+	padding:7px;
+	font-size:10px;
+	font-family:Arial;
+	font-weight:normal;
+	color:#000000;
+}.CSSTableGenerator tr:last-child td{
+	border-width:0px 1px 0px 0px;
+}.CSSTableGenerator tr td:last-child{
+	border-width:0px 0px 1px 0px;
+}.CSSTableGenerator tr:last-child td:last-child{
+	border-width:0px 0px 0px 0px;
+}
+.CSSTableGenerator tr:first-child td{
+		background:-o-linear-gradient(bottom, #005fbf 5%, #003f7f 100%);	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #005fbf), color-stop(1, #003f7f) );
+	background:-moz-linear-gradient( center top, #005fbf 5%, #003f7f 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#005fbf", endColorstr="#003f7f");	background: -o-linear-gradient(top,#005fbf,003f7f);
+
+	background-color:#005fbf;
+	border:0px solid #000000;
+	text-align:center;
+	border-width:0px 0px 1px 1px;
+	font-size:14px;
+	font-family:Arial;
+	font-weight:bold;
+	color:#ffffff;
+}
+.CSSTableGenerator tr:first-child:hover td{
+	background:-o-linear-gradient(bottom, #005fbf 5%, #003f7f 100%);	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #005fbf), color-stop(1, #003f7f) );
+	background:-moz-linear-gradient( center top, #005fbf 5%, #003f7f 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#005fbf", endColorstr="#003f7f");	background: -o-linear-gradient(top,#005fbf,003f7f);
+
+	background-color:#005fbf;
+}
+.CSSTableGenerator tr:first-child td:first-child{
+	border-width:0px 0px 1px 0px;
+}
+.CSSTableGenerator tr:first-child td:last-child{
+	border-width:0px 0px 1px 1px;
+}
+</style>
+</head>
+
+ <body>
+
+
+<span><b>Alert Description:</b> This alert will inform the BigFix Team of external SCM sites that have had fixlets modified recently. This report is based upon the gather interval of the Core server.</span>
+<br>
+<span><b>Total # of SCM content Fixlets :</b> <?Relevance Number of bes fixlets whose ( name of site of it as lowercase contains "checklist for" and external site flag of site of it) ?></span>
+<br>
+<span><b>Most recent  SCM Fixlet content modification time stamp:</b> <?Relevance maximum of (modification time of it) of bes fixlets whose ( ( name of site of it as lowercase contains "checklist for" and external site flag of site of it) AND exist( modification time of it)) ?></span>
+<br>
+<span><b>Most recent x-fixlet-first-propagation time stamp:</b> <?Relevance maximum of (mime field "x-fixlet-first-propagation" of it as time) of bes fixlets whose ((exist (mime field whose (name of it = "x-fixlet-first-propagation" and exist (value whose (exist (it as string as time))of it)) of it))) ?></span>
+<br>
+<span><b>SCM Site Version Alert Hash:</b><?Relevance
+
+md5 of concatenations of ((name of it) & (display name of it) & (version of it as string) &  (url of it) ) of unique values of  sites of bes fixlets whose ( name of site of it as lowercase contains "checklist for" and external site flag of site of it)
+
+?>
+<br>
+<span><b>Report Generated @ </b> <?Relevance now  ?></span>
+<br>
+<br>
+
+
+
+ <h2>External SCM Content Site affected Versions  </h2>
+
+
+<div class="CSSTableGenerator" >
+<table id="resultsTble2" class="sortable" border=1>
+
+<tr>
+<td>Site Name</td>
+<td>Display Name</td>
+<td>Site Version</td>
+<td>URL</td>
+
+
+</tr>
+
+<?Relevance
+
+concatenation of trs of (td of (name of it) & td of  (display name of it) & td of  (version of it as string) & td of (url of it) ) of unique values of  sites of bes fixlets whose ( name of site of it as lowercase contains "checklist for" and external site flag of site of it)
+?>
+</table>
+</div>
+
+
+<br>
+<br>
+
+
+ <h2>External Content Site Content recently changed  </h2>
+
+
+<div class="CSSTableGenerator" >
+<table id="resultsTble" class="sortable" border=1>
+
+
+<tr>
+<td>Fixlet ID</td>
+<td>Fixlet Name</td>
+<td>Fixlet Link</td>
+<td>Fixlet Site and version</td>
+<td>Source Release Date</td>
+<td>Creation time</td>
+<td>Modification time</td>
+<td>Relevance</td>
+<td>Relevance MD5</td>
+<td>Actions</td>
+
+</tr>
+
+<?Relevance
+
+
+concatenations of trs of 
+(
+ td of ((id of it) as string)
+ & td of name of it
+ & td of link "Open Fixlet Link"of it
+ & td of (("Site:" & Display name of it & br & "Site Version:" &((version of it) as string) ) of site of it)
+ & td of (if exists source release date of it then source release date of it as string else "n/a") 
+ & td of (if (exist creation time of it) then ((creation time of it) as string) else ("no-value")) 
+ & td of (if (exist modification time of it) then ((modification time of it) as string) else ("no-value"))  
+ & td of (relevance of it as string) 
+ & td of (md5 of relevance of it as string) 
+ & td of (if(exist actions of it) then  (table "border=1" of
+                                          Concatenation of 
+                                          (
+                                          (concatenation of trs of (th of "Action #" & th of "Action Def" & th of "Action MD5" ))
+                                             &
+                                          (concatenation of trs of (
+                                           (
+                                            (
+                                              td of ((content id of it ) as string)
+                                              & td of (script of it )
+                                              & td of (md5 of script of it )
+                                            ) 
+                                            of actions of it)
+                                           )
+                                          )
+                                         ) 
+                                         )
+         else ("no-value" as html)) 
+ ) of
+ 
+  bes fixlets 
+  whose 
+(
+
+ ( name of site of it as lowercase contains "checklist for" and external site flag of site of it)
+AND 
+ ( 
+   (exist (creation time of it) AND (creation time of it) > (now - (65 * minute)))
+     OR 
+   (exist modification time of it AND (modification time of it) > (now - (65 * minute)))
+     OR 
+   (  
+    ((exist (mime field whose (name of it = "x-fixlet-first-propagation" and exist (value whose (exist (it as string as time)) of it)) of it)))
+    AND
+    (( date (local time zone) of (mime field "x-fixlet-first-propagation" of it as time) > (current date - 65 * minute))) 
+   )
+ )
+) 
+
+?>
+</table>
+</div>
+
+<br>
+
+<span><font size=1>Provided with no warranty or support</font></span>
+<span><font size=1>v3</font></span>
+
+ </body>
