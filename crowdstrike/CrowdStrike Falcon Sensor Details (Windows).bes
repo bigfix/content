@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
+	<Analysis>
+		<Title>CrowdStrike Falcon Sensor Details (Windows)</Title>
+		<Description><![CDATA[&nbsp; 
+<STYLE> body{ 	margin: 24px; 	font-family: Arial, Helvetica, sans-serif; 	font-size: 16px;  } .section { 	float:left; 	margin: 0px; 	width:100%; 	margin-bottom: 24px; }  .floating-container { 	float:left; 	background: #eee; 	width:97%; }  .card  { 	padding: 16px; 	margin: 24px; 	border-radius: 2px; 	background-color: #fff; 	color: rgba(0, 0, 0, 0.87); 	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2); 	clear: both;  }  .form-card-row { 	margin: 24px; 	float:left; 	background-color:#fff; 	color: rgba(0, 0, 0, 0.87); 	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);	 	width:95%; }  .form-card-header  { 	font-size: 16px; 	font-weight: bold; 	padding-bottom: 15px; }  .form-card { 	padding: 16px; 	margin-right:24px; 	border-radius:2px; 	width:500px; 	float:left }  .form-card.full-width { 	width:95% } .form-card-header  { 	font-size: 16px; 	font-weight: bold; 	padding-bottom: 15px; 	font-family: Arial, Helvetica, sans-serif; }  .form-card ul { 	list-style:none; 	padding:0; 	margin:0;	 }  .form-card li { 	display: block; 	padding: 9px 9px 0px 9px; 	border:1px solid #DDDDDD; 	margin-bottom: 30px; 	border-radius: 3px; }  .form-card-label { 	display: block; 	float: left; 	margin-top: -19px; 	background: #FFFFFF; 	height: 20px; 	padding: 2px 5px 2px 5px; 	color: #999999; 	font-size: 14px; 	overflow: hidden; 	font-family: Arial, Helvetica, sans-serif; }  .operating-system li, .platform li, .product li { 	border:none; 	padding: 9px 9px 0px 15px; }  .form-card-field { 	display: block; 	outline: none; 	line-height: 30px;     height:      30px; 	width:100%; 	margin: 0px 0px 0px 0px; 	font-family: Arial, Helvetica, sans-serif; 	border:1px solid #DDDDDD; 	margin-bottom: 15px; }  .form-card-field-default { 	color: #999999; } .form-card-checkbox { 	display: block;     outline: none; 	line-height: 30px;     height:      30px; 	width:100%; 	margin-bottom: 15px; 	font-family: Arial, Helvetica, sans-serif; }  .form-card-info { 	background: #F3F3F3; 	display: block; 	margin: 0 -9px -9px -9px; 	height:20px; 	text-align: left; 	color: #999999; 	font-size: 12px; 	padding: 10px; }  .required {     color: red; }  .fixlet-logo { 	margin: 10px; 	float:left; }  .fixlet-header  { 	height: 75px; 	width: 100%; 	background: #1976d2; 	top: 0; 	left: 0; }  .fixlet-title  { 	float:left; 	white-space: nowrap; 	font-size: 35px; 	color: #fff; 	font-weight: bold; 	margin-left: 25px; 	height:75px; 	line-height:75px; }   .cve { 	padding-bottom:5px; }  .cve-title { 	display:block; 	font-size: 20px; 	font-weight: bold; 	padding-bottom:10px; } .cve-description {  } .field_label { 	font-weight: bold; 	width:150px; } .field_value { 	 } table { 	width:100%; 	border-spacing:0px; } th { 	text-align:left; 	background:#1976d2; 	color:#fff; } tr { 	padding: 5px; } tr.odd { 	background:#f5f5f5; }   textarea { 	display:block; 	width: 100%; 	height: 150px; 	padding: 12px 20px; 	box-sizing: border-box; 	border: 2px solid #ccc; 	border-radius: 4px; 	background-color: #f8f8f8; 	font-size: 16px; 	resize: none;   }         .form-card-select   { 	  display: block; 	  outline: none; 	  line-height: 30px; 	  height:      30px; 	  width:95%; 	  margin: 0px 0px 0px 0px; 	  font-family: Arial, Helvetica, sans-serif; 	  border:1px solid #DDDDDD; 	  margin-bottom: 15px;   }   .form-card-field-default   { 	  color: #999999;   }   .form-card-checkbox   { 	  display: block; 	  outline: none; 	  line-height: 30px; 	  height:      30px; 	  width:100%; 	  margin-bottom: 15px; 	  font-family: Arial, Helvetica, sans-serif;   }   </STYLE>
+
+<DIV id=main class=main>
+<DIV class=floating-container>
+<DIV class=fixlet-header><IMG class=fixlet-logo src="data:image/png;base64,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"> <SPAN class=fixlet-title>HCL BigFix</SPAN> </DIV>
+<DIV class=card>
+<DIV class=cve-title>
+<DIV class=cve>CrowdStrike Falcon Sensor Details</DIV></DIV>
+<DIV class=cve-description>The following returns the installed falcon sensor version, and if any corrupt <STRONG>"C-00000291*.sys"</STRONG> files exist on devices that have crowdstrike installed</DIV></DIV>
+<DIV class=form-card-row>
+<DIV class=form-card style="HEIGHT: 355px; WIDTH: 510px">
+<P class=form-card-header>General Information</P>
+<UL>
+<LI><LABEL class=form-card-label>Deployment Information</LABEL> 
+<TABLE>
+<TBODY>
+<TR>
+<TD class=field_label><SPAN class=form-card-info style="HEIGHT: 72px; WIDTH: 475px">
+<P><FONT color=#ff0000>Notes:&nbsp;&nbsp;none</FONT></P></SPAN></TD>
+<TD class=field_value></TD></TR>
+<TR>
+<TD class=field_label></TD>
+<TD class=field_value></TD></TR>
+<TR>
+<TD class=field_label></TD>
+<TD class=field_value></TD></TR>
+<TR>
+<TD class=field_label></TD>
+<TD class=field_value></TD></TR></TBODY></TABLE>
+<LI><LABEL class=form-card-label>Publication Info</LABEL> 
+<TABLE>
+<TBODY>
+<TR>
+<TD class=field_label>Publication Date:</TD>
+<TD class=field_value>2024-07-19 00:00:00</TD></TR>
+<TR>
+<TD class=field_label>Last Modified:</TD>
+<TD class=field_value>2024-07-19 00:00:00</TD></TR></TBODY></TABLE></LI></UL></DIV>
+<DIV class=form-card>
+<P class=form-card-header>Version</P>
+<UL>
+<LI><LABEL class=form-card-label>History</LABEL> 
+<TABLE>
+<TBODY>
+<TR>
+<TH>Name</TH>
+<TH>Vendor</TH>
+<TH>Changes</TH></TR>
+<TR>
+<TD>Zane Sanderson</TD>
+<TD>HCL</TD>
+<TD>Initial Creation</TD></TR></TBODY></TABLE></LI></UL></DIV></DIV></DIV></DIV>
+<P dir=ltr><LABEL for=secret></LABEL>&nbsp;</P>
+<P dir=ltr>&nbsp;</P>
+<P dir=ltr>&nbsp;</P>]]></Description>
+		<Relevance>windows of operating system</Relevance>
+		<Relevance><![CDATA[version of client >= "9.0"]]></Relevance>
+		<Relevance>exists file "CrowdStrike\CSFalconService.exe" of (program files x32 folders; program files x64 folders)</Relevance>
+		<Source>Internal</Source>
+		<SourceReleaseDate>2024-07-19</SourceReleaseDate>
+		<MIMEField>
+			<Name>x-fixlet-modification-time</Name>
+			<Value>Fri, 19 Jul 2024 14:50:10 +0000</Value>
+		</MIMEField>
+		<Domain>BESC</Domain>
+		<Property Name="CSFalconService - Version" ID="1">(name of it, version of it) of files "CrowdStrike\CSFalconService.exe" of (program files x32 folders; program files x64 folders)</Property>
+		<Property Name="CSFalconService  - Corrupt Sys File(s) Detected" ID="2" EvaluationPeriod="PT1H"><![CDATA[exists find files "C-00000291-*.sys" whose ( modification time of it < "Fri, 19 Jul 2024 05:27:00 +0000" as time) of folders "drivers\crowdstrike" of native system folder]]></Property>
+		<Property Name="CSFalconService  - Corrupt File(s) Names" ID="3" EvaluationPeriod="PT1H"><![CDATA[names of find files "C-00000291-*.sys" whose ( modification time of it < "Fri, 19 Jul 2024 05:27:00 +0000" as time) of folders "drivers\crowdstrike" of native system folder]]></Property>
+		<Property Name="CSFalconService  - Service Status" ID="4">if (exists service "CSFalconService") then state of service "CSFalconService" else "No Service"</Property>
+	</Analysis>
+</BES>

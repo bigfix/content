@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
+	<Fixlet>
+		<Title>Uninstall - CrowdStrike Falcon Sensor v5.10.9106 and Later (Windows)</Title>
+		<Description><![CDATA[&nbsp; 
+<STYLE> body{ 	margin: 24px; 	font-family: Arial, Helvetica, sans-serif; 	font-size: 16px;  } .section { 	float:left; 	margin: 0px; 	width:100%; 	margin-bottom: 24px; }  .floating-container { 	float:left; 	background: #eee; 	width:97%; }  .card  { 	padding: 16px; 	margin: 24px; 	border-radius: 2px; 	background-color: #fff; 	color: rgba(0, 0, 0, 0.87); 	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2); 	clear: both;  }  .form-card-row { 	margin: 24px; 	float:left; 	background-color:#fff; 	color: rgba(0, 0, 0, 0.87); 	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);	 	width:95%; }  .form-card-header  { 	font-size: 16px; 	font-weight: bold; 	padding-bottom: 15px; }  .form-card { 	padding: 16px; 	margin-right:24px; 	border-radius:2px; 	width:500px; 	float:left }  .form-card.full-width { 	width:95% } .form-card-header  { 	font-size: 16px; 	font-weight: bold; 	padding-bottom: 15px; 	font-family: Arial, Helvetica, sans-serif; }  .form-card ul { 	list-style:none; 	padding:0; 	margin:0;	 }  .form-card li { 	display: block; 	padding: 9px 9px 0px 9px; 	border:1px solid #DDDDDD; 	margin-bottom: 30px; 	border-radius: 3px; }  .form-card-label { 	display: block; 	float: left; 	margin-top: -19px; 	background: #FFFFFF; 	height: 20px; 	padding: 2px 5px 2px 5px; 	color: #999999; 	font-size: 14px; 	overflow: hidden; 	font-family: Arial, Helvetica, sans-serif; }  .operating-system li, .platform li, .product li { 	border:none; 	padding: 9px 9px 0px 15px; }  .form-card-field { 	display: block; 	outline: none; 	line-height: 30px;     height:      30px; 	width:100%; 	margin: 0px 0px 0px 0px; 	font-family: Arial, Helvetica, sans-serif; 	border:1px solid #DDDDDD; 	margin-bottom: 15px; }  .form-card-field-default { 	color: #999999; } .form-card-checkbox { 	display: block;     outline: none; 	line-height: 30px;     height:      30px; 	width:100%; 	margin-bottom: 15px; 	font-family: Arial, Helvetica, sans-serif; }  .form-card-info { 	background: #F3F3F3; 	display: block; 	margin: 0 -9px -9px -9px; 	height:20px; 	text-align: left; 	color: #999999; 	font-size: 12px; 	padding: 10px; }  .required {     color: red; }  .fixlet-logo { 	margin: 10px; 	float:left; }  .fixlet-header  { 	height: 75px; 	width: 100%; 	background: #1976d2; 	top: 0; 	left: 0; }  .fixlet-title  { 	float:left; 	white-space: nowrap; 	font-size: 35px; 	color: #fff; 	font-weight: bold; 	margin-left: 25px; 	height:75px; 	line-height:75px; }   .cve { 	padding-bottom:5px; }  .cve-title { 	display:block; 	font-size: 20px; 	font-weight: bold; 	padding-bottom:10px; } .cve-description {  } .field_label { 	font-weight: bold; 	width:150px; } .field_value { 	 } table { 	width:100%; 	border-spacing:0px; } th { 	text-align:left; 	background:#1976d2; 	color:#fff; } tr { 	padding: 5px; } tr.odd { 	background:#f5f5f5; }   textarea { 	display:block; 	width: 100%; 	height: 150px; 	padding: 12px 20px; 	box-sizing: border-box; 	border: 2px solid #ccc; 	border-radius: 4px; 	background-color: #f8f8f8; 	font-size: 16px; 	resize: none;   }         .form-card-select   { 	  display: block; 	  outline: none; 	  line-height: 30px; 	  height:      30px; 	  width:95%; 	  margin: 0px 0px 0px 0px; 	  font-family: Arial, Helvetica, sans-serif; 	  border:1px solid #DDDDDD; 	  margin-bottom: 15px;   }   .form-card-field-default   { 	  color: #999999;   }   .form-card-checkbox   { 	  display: block; 	  outline: none; 	  line-height: 30px; 	  height:      30px; 	  width:100%; 	  margin-bottom: 15px; 	  font-family: Arial, Helvetica, sans-serif;   }   </STYLE>
+
+<DIV id=main class=main>
+<DIV class=floating-container>
+<DIV class=fixlet-header><IMG class=fixlet-logo src="data:image/png;base64,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"> <SPAN class=fixlet-title>HCL BigFix</SPAN> </DIV>
+<DIV class=card>
+<DIV class=cve-title>
+<DIV class=cve>Uninstall CrowdStrike Falcon Sensor v5.10.9106 and Later (Windows)</DIV></DIV>
+<DIV class=cve-description>
+<H3 style="FONT-FAMILY: Arial, sans-serif; WHITE-SPACE: normal; WORD-SPACING: 0px; TEXT-TRANSFORM: none; COLOR: rgb(34,34,34); FONT-STYLE: normal; ORPHANS: 2; WIDOWS: 2; MARGIN: 30px 0px 10px; LETTER-SPACING: normal; BACKGROUND-COLOR: rgb(255,255,255); TEXT-INDENT: 0px; font-variant-ligatures: normal; font-variant-caps: normal; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial">This tool is&nbsp;a best-effort from the BigFix team. Dedicated support for this content is not available from the BigFix team.&nbsp; Careful testing should be taken in your environment before applying or rolling back mitigations.&nbsp; Be sure to view the "General Information" section below for prequisites.</H3></DIV>
+<DIV class=cve-description>&nbsp;</DIV>
+<DIV class=cve-description>The following task will run CSUninstllTool.exe to remove the falcon Sensor. e.g <SPAN style="FONT-SIZE: 15px; FONT-FAMILY: Arial, sans-serif; WHITE-SPACE: normal; WORD-SPACING: 0px; TEXT-TRANSFORM: none; FLOAT: none; FONT-WEIGHT: 400; COLOR: rgb(34,34,34); FONT-STYLE: normal; ORPHANS: 2; WIDOWS: 2; DISPLAY: inline !important; LETTER-SPACING: normal; BACKGROUND-COLOR: rgb(255,255,255); TEXT-INDENT: 0px; font-variant-ligatures: normal; font-variant-caps: normal; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial">CsUninstallTool.exe MAINTENANCE_TOKEN=a0c76aa097218dc446082 /quiet</SPAN></DIV>
+<DIV class=cve-description><SPAN style="FONT-SIZE: 15px; FONT-FAMILY: Arial, sans-serif; WHITE-SPACE: normal; WORD-SPACING: 0px; TEXT-TRANSFORM: none; FLOAT: none; FONT-WEIGHT: 400; COLOR: rgb(34,34,34); FONT-STYLE: normal; ORPHANS: 2; WIDOWS: 2; DISPLAY: inline !important; LETTER-SPACING: normal; BACKGROUND-COLOR: rgb(255,255,255); TEXT-INDENT: 0px; font-variant-ligatures: normal; font-variant-caps: normal; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial">
+<P style="FONT-SIZE: 15px; FONT-FAMILY: Arial, sans-serif; WHITE-SPACE: normal; WORD-SPACING: 0px; TEXT-TRANSFORM: none; FONT-WEIGHT: 400; COLOR: rgb(34,34,34); FONT-STYLE: normal; ORPHANS: 2; WIDOWS: 2; LETTER-SPACING: normal; BACKGROUND-COLOR: rgb(255,255,255); TEXT-INDENT: 0px; font-variant-ligatures: normal; font-variant-caps: normal; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial"><EM>Example<SPAN>&nbsp;</SPAN><SPAN class=hashtag-raw>#1</SPAN><SPAN>&nbsp;</SPAN>contains:</EM></P>
+<UL style="FONT-SIZE: 15px; FONT-FAMILY: Arial, sans-serif; WHITE-SPACE: normal; WORD-SPACING: 0px; TEXT-TRANSFORM: none; FONT-WEIGHT: 400; COLOR: rgb(34,34,34); PADDING-BOTTOM: 0px; FONT-STYLE: normal; PADDING-TOP: 0px; PADDING-LEFT: 1.25em; CLEAR: both; ORPHANS: 2; WIDOWS: 2; MARGIN: 1em 0px 1em 1.25em; LETTER-SPACING: normal; PADDING-RIGHT: 0px; BACKGROUND-COLOR: rgb(255,255,255); TEXT-INDENT: 0px; font-variant-ligatures: normal; font-variant-caps: normal; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial">
+<LI>Installer = CsUninstallTool.exe 
+<LI>Silent install = Yes 
+<LI>End-user installation prompts = No 
+<LI>Maintenance token = Yes 
+<LI>Installation log directory =<SPAN>&nbsp;</SPAN><CODE style="FONT-SIZE: 1em; FONT-FAMILY: var(--d-font-family--monospace); BACKGROUND: none transparent scroll repeat 0% 0%; COLOR: ">%TEMP%</CODE> 
+<UL style="PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 1.25em; CLEAR: both; MARGIN: 0px; PADDING-RIGHT: 0px">
+<LI>Default value since not defined.</LI></UL></LI></UL></SPAN></DIV>
+<DIV class=cve-description>&nbsp;</DIV>
+<DIV class=cve-description>Maintenance Token: <INPUT id=secret type=password name=secret> <script>
+                                                   document.body.ontakeaction = function() {
+                                                                    var theSecret = document.getElementById( "secret" ).value;
+																	if (theSecret==null || theSecret=="")
+																		{alert("Hey, you forgot to enter a secure parameter! Please enter one on the Description tab before taking the action.");}																	
+                                                                    else
+																		{TakeSecureFixletAction( Relevance('id of current fixlet'), Relevance('id of current bes site'), "Action1", {}, { secret: theSecret } );}
+                                                                    return false;
+                                                   }
+                                                   </script> </DIV></DIV>
+<DIV class=card><STRONG>Possible error codes:</STRONG><BR>&nbsp;0&nbsp; Successful Installation<BR>-1 Unable to create HCL folder for logs<BR>-2 Failed to remove Crowdstrike - folder still exists<BR>-3 Failed to remove Crowdstrike - &nbsp;Windows Registry ketys still exist</DIV>
+<DIV class=form-card-row>
+<DIV class=form-card style="HEIGHT: 370px">
+<P class=form-card-header>General Information</P>
+<UL>
+<LI><LABEL class=form-card-label>Deployment Information</LABEL> 
+<TABLE>
+<TBODY>
+<TR>
+<TD class=field_label><SPAN class=form-card-info style="HEIGHT: 72px; WIDTH: 475px">
+<P><FONT color=#ff0000>Notes:&nbsp;&nbsp;"Uninstall And maintenance Protection" as well as "Bulk Maintenance Mode" MUST be enabled in the Crowdstrike Console to be able to unistall Crowdstrike Falcon Sensor</FONT></P>
+<P><FONT color=#ff0000></FONT>&nbsp;</P>
+<P><FONT color=#ff0000>Please&nbsp;Make sure you have the correct Maintenance token Before deploying</FONT></P>
+<P><FONT color=#ff0000>CSUninstallTool.exe&nbsp; must be manually cached on the bigfix server as this can only be&nbsp;downloaded &nbsp;from </FONT><A href="https://falcon.crowdstrike.com/support/tool-downloads">https://falcon.crowdstrike.com/support/tool-downloads</A>&nbsp;<FONT color=#ff0000>which requires a login.</FONT></P></SPAN></TD>
+<TD class=field_value></TD></TR>
+<TR>
+<TD class=field_label></TD>
+<TD class=field_value></TD></TR>
+<TR>
+<TD class=field_label></TD>
+<TD class=field_value></TD></TR>
+<TR>
+<TD class=field_label></TD>
+<TD class=field_value></TD></TR></TBODY></TABLE>
+<LI><LABEL class=form-card-label>Publication Info</LABEL> 
+<TABLE>
+<TBODY>
+<TR>
+<TD class=field_label>Publication Date:</TD>
+<TD class=field_value>2024-07-19 00:00:00</TD></TR>
+<TR>
+<TD class=field_label>Last Modified:</TD>
+<TD class=field_value>2024-07-19 00:00:00</TD></TR></TBODY></TABLE></LI></UL></DIV>
+<DIV class=form-card>
+<P class=form-card-header>Version</P>
+<UL>
+<LI><LABEL class=form-card-label>History</LABEL> 
+<TABLE>
+<TBODY>
+<TR>
+<TH>Name</TH>
+<TH>Vendor</TH>
+<TH>Changes</TH></TR>
+<TR>
+<TD>Zane Sanderson</TD>
+<TD>HCL</TD>
+<TD>Initial Creation</TD></TR></TBODY></TABLE></LI></UL></DIV></DIV></DIV></DIV>
+<P dir=ltr><LABEL for=secret></LABEL>&nbsp;</P>
+<P dir=ltr>&nbsp;</P>
+<P dir=ltr>&nbsp;</P>]]></Description>
+		<Relevance>windows of operating system</Relevance>
+		<Relevance><![CDATA[version of client >= "9.0"]]></Relevance>
+		<Relevance>if (exists property "in proxy agent context") then (not in proxy agent context) else True</Relevance>
+		<Relevance>exists file "CrowdStrike\CSFalconService.exe" of (program files x32 folders; program files x64 folders)</Relevance>
+		<Category></Category>
+		<Source>Internal</Source>
+		<SourceID></SourceID>
+		<SourceReleaseDate>2024-07-19</SourceReleaseDate>
+		<SourceSeverity></SourceSeverity>
+		<CVENames></CVENames>
+		<SANSID></SANSID>
+		<MIMEField>
+			<Name>bigfixme-ID</Name>
+			<Value>3670</Value>
+		</MIMEField>
+		<MIMEField>
+			<Name>bigfixme-added-time</Name>
+			<Value>Fri, 06 Dec 2013 04:16:50 GMT</Value>
+		</MIMEField>
+		<MIMEField>
+			<Name>bigfixme-modification-time</Name>
+			<Value>Fri, 06 Dec 2013 04:16:50 GMT</Value>
+		</MIMEField>
+		<MIMEField>
+			<Name>bigfixme-keywords</Name>
+			<Value>user, net.exe, secure parameter, password</Value>
+		</MIMEField>
+		<MIMEField>
+			<Name>bigfixme-versions-ids</Name>
+			<Value>3666,3669</Value>
+		</MIMEField>
+		<MIMEField>
+			<Name>x-fixlet-modification-time</Name>
+			<Value>Fri, 19 Jul 2024 16:52:15 +0000</Value>
+		</MIMEField>
+		<Domain>BES </Domain>
+		<DefaultAction ID="Action1">
+			<Description>
+				<PreLink></PreLink>
+				<Link>Uninstall</Link>
+				<PostLink><![CDATA[&nbsp;Crowdstrike Falcon Sensor on Targeted Device(s)]]></PostLink>
+			</Description>
+			<ActionScript MIMEType="application/x-Fixlet-Windows-Shell"><![CDATA[// Download:
+prefetch CsUninstallTool.exe sha1:0904f9e46a007de7805958ad62564f9ebb143a05 size:158512 https://MANUAL_BES_CACHING_REQUIRED/CsUninstallTool.exe sha256:e127f23dda6f2c3f48e9d2ad55a9d245b3fe6e6e607ed2572a4dd2be819a8235
+
+action uses wow64 redirection {not x64 of operating system}
+
+// Create log file
+parameter "clientroot" = "c:\"
+parameter "logfile" = "{(parameter "clientroot") & "\CrowdStrike_Removal.txt"}"
+waithidden cmd.exe /C @echo %date% %time% > {parameter "logfile"}
+waithidden cmd.exe /C @echo %date% %time% Starting CrowdStrike Sensor uninstall >> {parameter "logfile"}
+
+
+// Run uninstall tool
+waithidden cmd.exe /C @echo %date% %time% Running uninstall tool >> {parameter "logfile"}
+waithidden cmd.exe /C "__Download\CsUninstallTool.exe" MAINTENANCE_TOKEN={parameter "secret"} /quiet 
+wait cmd.exe /C @echo %date% %time% Validating uninstallation >> {parameter "logfile"}
+if {exists folders "drivers\crowdstrike" of (system x64 folder)}
+	waithidden cmd.exe /C @echo %date% %time% Crowdtrike folder still exists. Aborting with error code -2 >> {parameter "logfile"}
+	exit -2
+else
+	waithidden cmd.exe /C @echo %date% %time% Crowdtrike folder was removed >> {parameter "logfile"}
+endif
+if {exists keys "HKLM\SOFTWARE\CrowdStrike\InfDb" of native registry}
+	waithidden cmd.exe /C @echo %date% %time% Registry keys still exist. Aborting with error code -3 >> {parameter "logfile"}
+	exit -3
+else
+	waithidden cmd.exe /C @echo %date% %time% Registry keys were removed >> {parameter "logfile"}
+endif
+
+waithidden cmd.exe /C @echo %date% %time% End of CrowdStrike Sensor uninstall >> {parameter "logfile"}
+
+// Remove this line if baseline is being used or deployment will restart endpoint
+action requires restart
+]]></ActionScript>
+			<Settings>
+				<PreActionShowUI>false</PreActionShowUI>
+				<HasRunningMessage>false</HasRunningMessage>
+				<HasTimeRange>false</HasTimeRange>
+				<HasStartTime>false</HasStartTime>
+				<HasEndTime>true</HasEndTime>
+				<EndDateTimeLocalOffset>P2D</EndDateTimeLocalOffset>
+				<HasDayOfWeekConstraint>false</HasDayOfWeekConstraint>
+				<UseUTCTime>false</UseUTCTime>
+				<ActiveUserRequirement>NoRequirement</ActiveUserRequirement>
+				<ActiveUserType>AllUsers</ActiveUserType>
+				<HasWhose>false</HasWhose>
+				<PreActionCacheDownload>false</PreActionCacheDownload>
+				<Reapply>false</Reapply>
+				<HasReapplyLimit>true</HasReapplyLimit>
+				<ReapplyLimit>3</ReapplyLimit>
+				<HasReapplyInterval>false</HasReapplyInterval>
+				<HasRetry>false</HasRetry>
+				<HasTemporalDistribution>false</HasTemporalDistribution>
+				<ContinueOnErrors>true</ContinueOnErrors>
+				<PostActionBehavior Behavior="Nothing"></PostActionBehavior>
+				<IsOffer>false</IsOffer>
+			</Settings>
+			<SettingsLocks>
+				<ActionUITitle>false</ActionUITitle>
+				<PreActionShowUI>false</PreActionShowUI>
+				<PreAction>
+					<Text>false</Text>
+					<AskToSaveWork>false</AskToSaveWork>
+					<ShowActionButton>false</ShowActionButton>
+					<ShowCancelButton>false</ShowCancelButton>
+					<DeadlineBehavior>false</DeadlineBehavior>
+					<ShowConfirmation>false</ShowConfirmation>
+				</PreAction>
+				<HasRunningMessage>false</HasRunningMessage>
+				<RunningMessage>
+					<Text>false</Text>
+				</RunningMessage>
+				<TimeRange>false</TimeRange>
+				<StartDateTimeOffset>false</StartDateTimeOffset>
+				<EndDateTimeOffset>false</EndDateTimeOffset>
+				<DayOfWeekConstraint>false</DayOfWeekConstraint>
+				<ActiveUserRequirement>false</ActiveUserRequirement>
+				<ActiveUserType>false</ActiveUserType>
+				<Whose>false</Whose>
+				<PreActionCacheDownload>false</PreActionCacheDownload>
+				<Reapply>false</Reapply>
+				<ReapplyLimit>false</ReapplyLimit>
+				<RetryCount>false</RetryCount>
+				<RetryWait>false</RetryWait>
+				<TemporalDistribution>false</TemporalDistribution>
+				<ContinueOnErrors>false</ContinueOnErrors>
+				<PostActionBehavior>
+					<Behavior>false</Behavior>
+					<AllowCancel>false</AllowCancel>
+					<Deadline>true</Deadline>
+					<Title>false</Title>
+					<Text>false</Text>
+				</PostActionBehavior>
+				<IsOffer>false</IsOffer>
+				<AnnounceOffer>false</AnnounceOffer>
+				<OfferCategory>false</OfferCategory>
+				<OfferDescriptionHTML>false</OfferDescriptionHTML>
+			</SettingsLocks>
+		</DefaultAction>
+	</Fixlet>
+</BES>
