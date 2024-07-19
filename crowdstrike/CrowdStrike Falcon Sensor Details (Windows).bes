@@ -65,11 +65,11 @@
 		<SourceReleaseDate>2024-07-19</SourceReleaseDate>
 		<MIMEField>
 			<Name>x-fixlet-modification-time</Name>
-			<Value>Fri, 19 Jul 2024 14:50:10 +0000</Value>
+			<Value>Fri, 19 Jul 2024 19:34:27 +0000</Value>
 		</MIMEField>
 		<Domain>BESC</Domain>
 		<Property Name="CSFalconService - Version" ID="1">(name of it, version of it) of files "CrowdStrike\CSFalconService.exe" of (program files x32 folders; program files x64 folders)</Property>
-		<Property Name="CSFalconService  - Corrupt Sys File(s) Detected" ID="2" EvaluationPeriod="PT1H"><![CDATA[exists find files "C-00000291-*.sys" whose ( modification time of it < "Fri, 19 Jul 2024 05:27:00 +0000" as time) of folders "drivers\crowdstrike" of native system folder]]></Property>
+		<Property Name="CSFalconService  - Corrupt Sys File(s) Detected" ID="2" EvaluationPeriod="PT1H"><![CDATA[exists maxima whose (it < "Fri, 19 Jul 2024 05:27:00 +0000" as time) of modification times of find files "C-00000291-*.sys" of folders "drivers\crowdstrike" of native system folder]]></Property>
 		<Property Name="CSFalconService  - Corrupt File(s) Names" ID="3" EvaluationPeriod="PT1H"><![CDATA[names of find files "C-00000291-*.sys" whose ( modification time of it < "Fri, 19 Jul 2024 05:27:00 +0000" as time) of folders "drivers\crowdstrike" of native system folder]]></Property>
 		<Property Name="CSFalconService  - Service Status" ID="4">if (exists service "CSFalconService") then state of service "CSFalconService" else "No Service"</Property>
 	</Analysis>
