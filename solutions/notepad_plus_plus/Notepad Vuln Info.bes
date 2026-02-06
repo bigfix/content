@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
 	<Analysis>
-		<Title>Notepad++ Vuln Info</Title>
+		<Title>Notepad++ Vuln Info CVE-2025-15556</Title>
 		<Description>Results from the Notepad++ Chrysalis IOC Scanner fixlet </Description>
 		<Relevance>windows of operating system</Relevance>
-		<Relevance><![CDATA[exists lines containing "==== RESULT ====" of files "Chrysalis_Results.txt" whose(now - modification time of it < 3 * day) of folders "__Global\Logs" of data folders of client]]></Relevance>
+		<Relevance><![CDATA[(exists regapp "notepad++.exe") OR (exists lines containing "==== RESULT ====" of files "Chrysalis_Results.txt" whose(now - modification time of it < 3 * day) of folders "__Global\Logs" of data folders of client)]]></Relevance>
 		<Source>Internal</Source>
 		<SourceReleaseDate>2026-02-03</SourceReleaseDate>
 		<MIMEField>
 			<Name>x-fixlet-modification-time</Name>
-			<Value>Fri, 06 Feb 2026 13:15:50 +0000</Value>
+			<Value>Fri, 06 Feb 2026 19:51:36 +0000</Value>
 		</MIMEField>
 		<Domain>BESC</Domain>
 		<Property Name="Chrysalis Scan Results" ID="1" EvaluationPeriod="PT6H">next lines of lines containing "==== RESULT ====" of files "Chrysalis_Results.txt" of folders "__Global\Logs" of data folders of client</Property>
-		<Property Name="Notpad++ Vulnerable Status" ID="3" EvaluationPeriod="PT6H"><![CDATA[if (exists regapp "notepad++.exe") then (if (version of regapp "notepad++.exe" < "8.8.9.0" as version) then "VULNERABLE VERSION OF NOTEPAD++ FOUND" else "NOTEPAD++ Non-Vulnerable Version Installed") else if not exists regapp "notepad++.exe" then "NOTEPAD++ Not installed" else "N/A"]]></Property>
+		<Property Name="Notpad++ Vulnerable Status" ID="3" EvaluationPeriod="PT6H"><![CDATA[( ("VULNERABLE VERSION: " & it) whose(it as version < "8.8.9.0" as version) | "NOT VULNERABLE VERSION: " & it) of (it as string) of version of regapps "notepad++.exe"]]></Property>
+		<Property Name="Potential File IOCs" ID="4" EvaluationPeriod="P1D">(pathnames of it, creation times of it, sizes of it, sha256s of it) of find files ("AutoUpdater.exe";"update.exe";"log.dll";"BluetoothService.exe";"BluetoothService*";"*.nsi";"u.bat";"conf.c";"libtcc.dll") of (folders ("appdata\local\temp"; "\appdata\Local";"appdata\Roam";"appdata\locallow"; names of folders of folders "appdata\local" of it) of folders of Folder "Users" of root folders of drives)</Property>
+		<Property Name="Potential C2 Network IOCs" ID="5" EvaluationPeriod="PT1H"><![CDATA[if exists sockets whose ( tcp of it AND exists tcp state of it AND established of tcp state of it AND exists remote address of it AND set of ("95.179.213.0"; "61.4.102.97"; "59.110.7.32"; "124.222.137.114") contains (remote address of it as string) ) of network then concatenations ", " of ( (remote address of it as string) & ":" & (remote port of it as string) & " (State: " & (tcp state of it as string) & ", Process: " & name of process of it & ", PID: " & (id of process of it as string) & ")" ) of sockets whose ( tcp of it AND exists tcp state of it AND established of tcp state of it AND exists remote address of it AND set of ("95.179.213.0"; "61.4.102.97"; "59.110.7.32"; "124.222.137.114") contains (remote address of it as string) ) of network else "No matching established C2 connections found"]]></Property>
 	</Analysis>
 </BES>
