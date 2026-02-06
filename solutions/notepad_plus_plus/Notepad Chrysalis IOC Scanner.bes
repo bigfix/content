@@ -1,0 +1,723 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
+	<Fixlet>
+		<Title>Notepad++ Chrysalis IOC Scanner</Title>
+		<Description><![CDATA[<P data-end="115" data-start="2">Get results for this Fixlet&nbsp;from the Notepad++ Vuln Info analysis</P>
+<P data-end="115" data-start="2">&nbsp;</P>
+<LI data-end="115" data-start="0">
+<P data-end="115" data-start="2">Logs all console output to <CODE data-end="52" data-start="29">Chrysalis_Results.txt</CODE> in the <STRONG data-end="89" data-start="60">same folder as the script</STRONG> using <CODE data-end="114" data-start="96">Start-Transcript</CODE>.</P>
+<LI data-end="228" data-start="116">
+<P data-end="228" data-start="118">Prints a <STRONG data-end="142" data-start="127">RUN CONTEXT</STRONG> header (script path, output path, computer name, and the account running the script).</P>
+<LI data-end="399" data-start="229">
+<P data-end="399" data-start="231">Enumerates <STRONG data-end="269" data-start="242">all local user profiles</STRONG> from the Windows ProfileList registry, so it can scan per-user locations even when run as <STRONG data-end="375" data-start="360">LocalSystem</STRONG> (or any other account).</P>
+<LI data-end="728" data-start="400">
+<P data-end="455" data-start="402">Builds per-user scan targets across <STRONG data-end="454" data-start="438">all profiles</STRONG>:</P>
+<UL data-end="728" data-start="458">
+<LI data-end="517" data-start="458">
+<P data-end="517" data-start="460"><CODE data-end="481" data-start="460">%AppData%\Bluetooth</CODE> (per-user Roaming Bluetooth folder)</P>
+<LI data-end="559" data-start="520">
+<P data-end="559" data-start="522"><CODE data-end="543" data-start="522">%LocalAppData%\Temp</CODE> (per-user Temp)</P>
+<LI data-end="610" data-start="562">
+<P data-end="610" data-start="564"><CODE data-end="580" data-start="564">%LocalAppData%</CODE> (per-user Local AppData root)</P>
+<LI data-end="728" data-start="613">
+<P data-end="728" data-start="615">Also includes the <STRONG data-end="652" data-start="633">current process</STRONG> context (<CODE data-end="676" data-start="662">$env:APPDATA</CODE>, <CODE data-end="689" data-start="678">$env:TEMP</CODE>, <CODE data-end="710" data-start="691">$env:LOCALAPPDATA</CODE>) as a safety net.</P></LI></UL>
+<LI data-end="955" data-start="729">
+<P data-end="786" data-start="731">Checks for a standard <STRONG data-end="779" data-start="753">Notepad++ installation</STRONG> under:</P>
+<UL data-end="955" data-start="789">
+<LI data-end="817" data-start="789">
+<P data-end="817" data-start="791"><CODE data-end="817" data-start="791">%ProgramFiles%\Notepad++</CODE></P>
+<LI data-end="853" data-start="820">
+<P data-end="853" data-start="822"><CODE data-end="853" data-start="822">%ProgramFiles(x86)%\Notepad++</CODE></P>
+<LI data-end="955" data-start="856">
+<P data-end="955" data-start="858">If found, prints the installed Notepad++ version and attempts to read the Authenticode signature.</P></LI></UL>
+<LI data-end="1242" data-start="956">
+<P data-end="1026" data-start="958">Performs a <STRONG data-end="1005" data-start="969">Bluetooth folder footprint check</STRONG> across all profiles:</P>
+<UL data-end="1242" data-start="1029">
+<LI data-end="1079" data-start="1029">
+<P data-end="1079" data-start="1031">Reports any <CODE data-end="1064" data-start="1043">%AppData%\Bluetooth</CODE> folders found.</P>
+<LI data-end="1128" data-start="1082">
+<P data-end="1128" data-start="1084">Notes whether the folder appears <STRONG data-end="1127" data-start="1117">Hidden</STRONG>.</P>
+<LI data-end="1242" data-start="1131">
+<P data-end="1242" data-start="1133">This is treated as a <STRONG data-end="1167" data-start="1154">heuristic</STRONG> (printed later under “HEURISTICS”), not a definitive Rapid7 IOC by itself.</P></LI></UL>
+<LI data-end="1966" data-start="1243">
+<P data-end="1308" data-start="1245">Performs a <STRONG data-end="1288" data-start="1256">Rapid7 SHA-256 IOC hash scan</STRONG> across these roots:</P>
+<UL data-end="1966" data-start="1311">
+<LI data-end="1347" data-start="1311">
+<P data-end="1347" data-start="1313">Every user’s <CODE data-end="1347" data-start="1326">%LocalAppData%\Temp</CODE></P>
+<LI data-end="1386" data-start="1350">
+<P data-end="1386" data-start="1352">Every user’s <CODE data-end="1386" data-start="1365">%AppData%\Bluetooth</CODE></P>
+<LI data-end="1432" data-start="1389">
+<P data-end="1432" data-start="1391">The Notepad++ install folder (if present)</P>
+<LI data-end="1577" data-start="1435">
+<P data-end="1577" data-start="1437">It hashes <STRONG data-end="1460" data-start="1447">all files</STRONG> in those locations (not filename-limited), so it can still catch the Rapid7 IOCs even if the attacker renamed files.</P>
+<LI data-end="1685" data-start="1580">
+<P data-end="1685" data-start="1582">Skips hashing locked/unreadable files quietly (returns <CODE data-end="1644" data-start="1637">$null</CODE> instead of throwing terminating errors).</P>
+<LI data-end="1772" data-start="1688">
+<P data-end="1772" data-start="1690">Skips hashing files above the configured max size (default 200MB) for performance.</P>
+<LI data-end="1855" data-start="1775">
+<P data-end="1855" data-start="1777">Bounds the number of files per root (default 50,000) to prevent runaway scans.</P>
+<LI data-end="1966" data-start="1858">
+<P data-end="1966" data-start="1860">If any file SHA-256 matches the Rapid7 list, it records a <STRONG data-end="1936" data-start="1918">Rapid7 IOC hit</STRONG> (counts toward “IOCS FOUND”).</P></LI></UL>
+<LI data-end="2127" data-start="1967">
+<P data-end="2010" data-start="1969">Checks for the Rapid7-reported <STRONG data-end="2009" data-start="2000">mutex</STRONG>:</P>
+<UL data-end="2127" data-start="2013">
+<LI data-end="2046" data-start="2013">
+<P data-end="2046" data-start="2015">Looks for <CODE data-end="2045" data-start="2025">Global\Jdhfv_1.0.1</CODE>.</P>
+<LI data-end="2127" data-start="2049">
+<P data-end="2127" data-start="2051">If present, records it as a <STRONG data-end="2097" data-start="2079">Rapid7 IOC hit</STRONG> (counts toward “IOCS FOUND”).</P></LI></UL>
+<LI data-end="2734" data-start="2128">
+<P data-end="2217" data-start="2130">Checks <STRONG data-end="2160" data-start="2137">Run key persistence</STRONG> indicators using the Rapid7-style <CODE data-end="2199" data-start="2195">-i</CODE> / <CODE data-end="2206" data-start="2202">-k</CODE> heuristic:</P>
+<UL data-end="2734" data-start="2220">
+<LI data-end="2268" data-start="2220">
+<P data-end="2268" data-start="2222">Scans HKLM Run keys (32-bit and 64-bit paths).</P>
+<LI data-end="2327" data-start="2271">
+<P data-end="2327" data-start="2273">Scans HKU Run keys for all currently loaded user SIDs.</P>
+<LI data-end="2482" data-start="2330">
+<P data-end="2482" data-start="2332">Optionally loads <STRONG data-end="2361" data-start="2349">unloaded</STRONG> user hives from <CODE data-end="2390" data-start="2378">NTUSER.DAT</CODE> (via <CODE data-end="2410" data-start="2396">reg.exe load</CODE>) to scan Run keys for users not currently logged in, then unloads them.</P>
+<LI data-end="2605" data-start="2485">
+<P data-end="2519" data-start="2487">Flags entries that contain both:</P>
+<UL data-end="2605" data-start="2524">
+<LI data-end="2566" data-start="2524">
+<P data-end="2566" data-start="2526">A path under <CODE data-end="2566" data-start="2539">AppData\Roaming\Bluetooth</CODE></P>
+<LI data-end="2605" data-start="2571">
+<P data-end="2605" data-start="2573">A <CODE data-end="2579" data-start="2575">-i</CODE> or <CODE data-end="2587" data-start="2583">-k</CODE> command-line flag</P></LI></UL>
+<LI data-end="2734" data-start="2608">
+<P data-end="2734" data-start="2610">These Run-key findings are treated as <STRONG data-end="2662" data-start="2648">heuristics</STRONG> (printed under “HEURISTICS”), not definitive Rapid7 IOCs by themselves.</P></LI></UL>
+<LI data-end="2995" data-start="2735">
+<P data-end="2795" data-start="2737">Checks <STRONG data-end="2764" data-start="2744">DNS client cache</STRONG> for Rapid7 network indicators:</P>
+<UL data-end="2995" data-start="2798">
+<LI data-end="2855" data-start="2798">
+<P data-end="2855" data-start="2800">Domains: <CODE data-end="2833" data-start="2809">api.skycloudcenter.com</CODE>, <CODE data-end="2855" data-start="2835">api.wiresguard.com</CODE></P>
+<LI data-end="2896" data-start="2858">
+<P data-end="2896" data-start="2860">IPs: <CODE data-end="2879" data-start="2865">95.179.213.0</CODE>, <CODE data-end="2896" data-start="2881">91.222.172.48</CODE></P>
+<LI data-end="2995" data-start="2899">
+<P data-end="2995" data-start="2901">If present in DNS cache results, records as a <STRONG data-end="2965" data-start="2947">Rapid7 IOC hit</STRONG> (counts toward “IOCS FOUND”).</P></LI></UL>
+<LI data-end="3267" data-start="2996">
+<P data-end="3071" data-start="2998">Produces a final <STRONG data-end="3025" data-start="3015">RESULT</STRONG> section designed for BigFix/property parsing:</P>
+<UL data-end="3267" data-start="3074">
+<LI data-end="3217" data-start="3074">
+<P data-end="3130" data-start="3076">If any Rapid7 IOC hits exist (hash/mutex/DNS), prints:</P>
+<UL data-end="3217" data-start="3135">
+<LI data-end="3149" data-start="3135">
+<P data-end="3149" data-start="3137"><CODE data-end="3149" data-start="3137">IOCS FOUND</CODE></P>
+<LI data-end="3217" data-start="3154">
+<P data-end="3217" data-start="3156">A table listing each IOC hit with Type / Indicator / Evidence</P></LI></UL>
+<LI data-end="3267" data-start="3220">
+<P data-end="3239" data-start="3222">Otherwise prints:</P>
+<UL data-end="3267" data-start="3244">
+<LI data-end="3267" data-start="3244">
+<P data-end="3267" data-start="3246"><CODE data-end="3267" data-start="3246">NO INDICATORS FOUND</CODE></P></LI></UL></LI></UL>
+<LI data-end="3572" data-start="3268">
+<P data-end="3366" data-start="3270">Produces an additional <STRONG data-end="3307" data-start="3293">HEURISTICS</STRONG> section (if any heuristic signals were observed), listing:</P>
+<UL data-end="3572" data-start="3369">
+<LI data-end="3423" data-start="3369">
+<P data-end="3423" data-start="3371"><CODE data-end="3392" data-start="3371">%AppData%\Bluetooth</CODE> folder existence/hidden status</P>
+<LI data-end="3494" data-start="3426">
+<P data-end="3494" data-start="3428">Run-key entries matching the <CODE data-end="3476" data-start="3457">Roaming\Bluetooth</CODE> + <CODE data-end="3486" data-start="3479">-i/-k</CODE> pattern</P>
+<LI data-end="3572" data-start="3497">
+<P data-end="3572" data-start="3499">These do <STRONG data-end="3515" data-start="3508">not</STRONG> flip the RESULT unless you decide to treat them as IOCs.</P></LI></UL></LI>]]></Description>
+		<Relevance>windows of operating system</Relevance>
+		<Relevance><![CDATA[not exists lines containing "==== RESULT ====" of files "Chrysalis_Results.txt" whose(now - modification time of it < 3 * day) of folders "__Global\Logs" of data folders of client]]></Relevance>
+		<Category></Category>
+		<Source>Bigfix AVP- Jeff Schafer</Source>
+		<SourceID></SourceID>
+		<SourceReleaseDate>2026-02-03</SourceReleaseDate>
+		<SourceSeverity></SourceSeverity>
+		<CVENames></CVENames>
+		<SANSID></SANSID>
+		<MIMEField>
+			<Name>x-fixlet-modification-time</Name>
+			<Value>Fri, 06 Feb 2026 13:36:46 +0000</Value>
+		</MIMEField>
+		<Domain>BESC</Domain>
+		<DefaultAction ID="Action1">
+			<Description>
+				<PreLink>Click </PreLink>
+				<Link>here</Link>
+				<PostLink> to deploy this action.</PostLink>
+			</Description>
+			<ActionScript MIMEType="application/x-Fixlet-Windows-Shell"><![CDATA[action uses wow64 redirection false
+
+parameter "WorkDir" = "{pathname of folders "__Global\Logs" of data folders of client}"
+
+folder create "{parameter "WorkDir"}"
+
+delete "{parameter "WorkDir"}\Chrysalis_Scanner.ps1"
+delete "{parameter "WorkDir"}\Chrysalis_Results.txt"
+delete __createfile
+
+createfile until __EOF__
+<#
+.SYNOPSIS
+  Checks for indicators related to the Rapid7 Notepad++/Chrysalis reporting.
+  PowerShell 5.1 compatible (NO ternary operator).
+
+  VERSION: File-logging + All-user-profile scan edition
+  - Writes full output to Chrysalis_Results.txt in the same folder as this .ps1 (Start-Transcript).
+  - Scans ALL user profiles (per-user AppData\Roaming\Bluetooth, AppData\Local\Temp, LocalAppData) + system context.
+  - Hash-scan is NOT filename-limited (so renamed files still match Rapid7 SHA256 IOCs).
+  - Gracefully skips locked/unreadable files (no noisy TerminatingError spam).
+  - RESULT section prints Rapid7 IOC hits ("IOCS FOUND") or "NO INDICATORS FOUND".
+  - Does NOT set non-zero exit codes based on findings.
+
+.NOTES
+  - Best-effort triage. Not a replacement for EDR/IR.
+  - Prefetch parsing is a crude string scrape (not a full prefetch parser).
+#>
+
+Set-StrictMode -Version Latest
+$ErrorActionPreference = 'Continue'
+
+# ---------------------------
+# Tuning knobs
+# ---------------------------
+$MaxFilesPerRoot = 50000     # bounds recursive hash scan per root to avoid huge temp folders
+$MaxFileSizeMB   = 200       # skip hashing files larger than this (performance/sanity)
+$LoadUnloadedUserHivesForRunKeys = $true  # attempts to reg load NTUSER.DAT for profiles not currently loaded
+
+$MaxFileSizeBytes = [int64]$MaxFileSizeMB * 1024 * 1024
+
+# ---------------------------
+# Logging to Chrysalis_Results.txt (same folder as this script)
+# ---------------------------
+$ScriptDir = $PSScriptRoot
+if (-not $ScriptDir -or $ScriptDir -eq '') {{
+  try {{ $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path } catch {{ $ScriptDir = (Get-Location).Path }
+}
+$ResultsPath = Join-Path $ScriptDir "Chrysalis_Results.txt"
+
+$TranscriptStarted = $false
+try {{
+  Start-Transcript -Path $ResultsPath -Force | Out-Null
+  $TranscriptStarted = $true
+}
+catch {{
+  Write-Host ("[!] Start-Transcript failed; will write RESULT summary to: {{0}" -f $ResultsPath)
+}
+
+# Always stop transcript
+try {{
+
+  # ---------------------------
+  # Rapid7 IOC SHA256 hashes (from Rapid7 reporting)
+  #
+  # IMPORTANT: Rapid7 lists at least one SHA256 reused across multiple rows (same shellcode hash).
+  # Hashtable keys must be unique, so we store hash -> list of labels.
+  # ---------------------------
+  $BadHashLabels = New-Object 'System.Collections.Generic.Dictionary[string, System.Collections.Generic.List[string]]' ([System.StringComparer]::OrdinalIgnoreCase)
+
+  function Add-BadHashLabel {{
+    param(
+      [Parameter(Mandatory)][string]$Hash,
+      [Parameter(Mandatory)][string]$Label
+    )
+    $h = $Hash.Trim().ToLower()
+    if (-not $BadHashLabels.ContainsKey($h)) {{
+      $BadHashLabels[$h] = New-Object 'System.Collections.Generic.List[string]'
+    }
+    if (-not ($BadHashLabels[$h] -contains $Label)) {{
+      $BadHashLabels[$h].Add($Label) | Out-Null
+    }
+  }
+
+  # Primary artifacts
+  Add-BadHashLabel -Hash "a511be5164dc1122fb5a7daa3eef9467e43d8458425b15a640235796006590c9" -Label "update.exe (Rapid7 IOC)"
+  Add-BadHashLabel -Hash "8ea8b83645fba6e23d48075a0d3fc73ad2ba515b4536710cda4f1f232718f53e" -Label "[NSIS].nsi (Rapid7 IOC)"
+  Add-BadHashLabel -Hash "2da00de67720f5f13b17e9d985fe70f10f153da60c9ab1086fe58f069a156924" -Label "BluetoothService.exe (Rapid7 IOC)"
+  Add-BadHashLabel -Hash "77bfea78def679aa1117f569a35e8fd1542df21f7e00e27f192c907e61d63a2e" -Label "BluetoothService (Rapid7 IOC)"
+  Add-BadHashLabel -Hash "3bdc4c0637591533f1d4198a72a33426c01f69bd2e15ceee547866f65e26b7ad" -Label "log.dll (Rapid7 IOC)"
+
+  # Loader + shellcode variants (Rapid7 tables)
+  Add-BadHashLabel -Hash "0a9b8d181fcda5e34a2d3b633c8d8043c3bdc22692156c18f350021d5f50995c" -Label "Loader 1 (Rapid7 IOC)"
+  Add-BadHashLabel -Hash "4c2ea8791c7569b95cd4be8fc9504197575ccaf03ac7b677adf696a4c8d48fff" -Label "Shellcode 1 (Rapid7 IOC)"
+  Add-BadHashLabel -Hash "e7cd605e4c2b8b361e0f0b35d8460dfb0950b1f073410f64196f42ea497e703c" -Label "Loader 2 (Rapid7 IOC)"
+  Add-BadHashLabel -Hash "078a9e8748a99e39049ad0f56a36c0edc8d5c608b4c3246915eb1a31fcd01b1e" -Label "Shellcode 2 (Rapid7 IOC)"
+  Add-BadHashLabel -Hash "b4169af00084e354026a0a252435dcae102500e68d69d0ec008128b8f9c1781e" -Label "Loader 3 (Rapid7 IOC)"
+  Add-BadHashLabel -Hash "7add55c79e1f6687412fcc73da5e6c2159cc85571876eb86d2ab93c0e2128a65" -Label "Shellcode 3 (Rapid7 IOC)"
+  Add-BadHashLabel -Hash "fcc276d2c81741a5085d10d23d8e01801b39971603f224faec41c51fd09b41f0" -Label "Loader 4 (Rapid7 IOC)"
+  
+  # SFX + scripts
+  Add-BadHashLabel -Hash "ea70ea87e477817e7fe5e69df6c8cf059631dfe8bb385ac6c6e902c681ef5a5b" -Label "Init.bat (Rapid7 IOC)"
+  Add-BadHashLabel -Hash "56de21cfc62e8d16964f7a54384bdac0c7d11f6614658675c6f0dc39bcb0c4db" -Label "Init.d (Rapid7 IOC)"
+  Add-BadHashLabel -Hash "5e9b975a3ae2d980d8b7a58022abc4d844c367f0047bb67d4c64c44923a753ed" -Label "NSIS SFX extract (Rapid7 IOC)"
+
+  # ---------------------------
+  # Rapid7 Network indicators (from Rapid7 reporting)
+  # ---------------------------
+  $BadDomains = @(
+    "api.skycloudcenter.com",
+    "api.wiresguard.com"
+  )
+  $BadIps = @(
+    "95.179.213.0",
+    "91.222.172.48"
+  )
+
+  # ---------------------------
+  # State + Rapid7 IOC hit collection (for final RESULT summary)
+  # ---------------------------
+  $IocHits = New-Object System.Collections.Generic.List[object]
+  $HeuristicHits = New-Object System.Collections.Generic.List[object]
+
+  function Add-IocHit {{
+    param(
+      [Parameter(Mandatory)][string]$Type,
+      [Parameter(Mandatory)][string]$Indicator,
+      [Parameter(Mandatory)][string]$Evidence
+    )
+    $script:IocHits.Add([pscustomobject]@{{
+      Type      = $Type
+      Indicator = $Indicator
+      Evidence  = $Evidence
+    }) | Out-Null
+  }
+
+  function Add-HeuristicHit {{
+    param(
+      [Parameter(Mandatory)][string]$Type,
+      [Parameter(Mandatory)][string]$Indicator,
+      [Parameter(Mandatory)][string]$Evidence
+    )
+    $script:HeuristicHits.Add([pscustomobject]@{{
+      Type      = $Type
+      Indicator = $Indicator
+      Evidence  = $Evidence
+    }) | Out-Null
+  }
+
+  # ---------------------------
+  # Helpers
+  # ---------------------------
+  function Write-Section {{
+    param([Parameter(Mandatory)][string]$Title)
+    Write-Host ("`n==== {{0} ====" -f $Title)
+  }
+
+  function Safe-GetAuthenticodeSignature {{
+    param([Parameter(Mandatory)][string]$Path)
+    try {{ Get-AuthenticodeSignature -FilePath $Path -ErrorAction Stop } catch {{ $null }
+  }
+
+  function Safe-GetFileHashSha256Lower {{
+    param([Parameter(Mandatory)][string]$Path)
+    try {{
+      $h = Get-FileHash -Path $Path -Algorithm SHA256 -ErrorAction SilentlyContinue
+      if ($null -ne $h -and $h.Hash) {{ return $h.Hash.ToLower() }
+      return $null
+    }
+    catch {{ return $null }
+  }
+
+  function Safe-ListFiles {{
+    param([Parameter(Mandatory)][string]$Root)
+    try {{ Get-ChildItem -Path $Root -Recurse -Force -File -ErrorAction SilentlyContinue } catch {{ @() }
+  }
+
+  function Format-HashValue {{
+    param([string]$Hash)
+    if ($null -ne $Hash -and $Hash -ne '') {{ return $Hash }
+    return "<unreadable>"
+  }
+
+  function Get-LoadedUserSids {{
+    $sids = @()
+    try {{
+      $sids = Get-ChildItem -Path Registry::HKEY_USERS -ErrorAction SilentlyContinue |
+        ForEach-Object {{ $_.PSChildName } |
+        Where-Object {{ $_ -match '^S-1-5-21-' -and $_ -notmatch '_Classes$' } |
+        Sort-Object -Unique
+    } catch {{ }
+    return @($sids)
+  }
+
+  function Get-ProfileList {{
+    $profiles = @()
+    try {{
+      $keys = Get-ChildItem 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList' -ErrorAction SilentlyContinue
+      foreach ($k in $keys) {{
+        $sid = $k.PSChildName
+        if ($sid -notmatch '^S-1-5-21-') {{ continue }
+
+        $p = $null
+        try {{ $p = (Get-ItemProperty $k.PSPath -ErrorAction SilentlyContinue).ProfileImagePath } catch {{ $p = $null }
+        if (-not $p) {{ continue }
+        if (-not (Test-Path $p)) {{ continue }
+
+        if ($p -match '\\(Default|Default User|Public|All Users)$') {{ continue }
+        if ($p -match '\\Windows\\System32\\config\\systemprofile$') {{ continue }
+        if ($p -match '\\Windows\\ServiceProfiles\\(LocalService|NetworkService)$') {{ continue }
+
+        $profiles += [pscustomobject]@{{
+          Sid         = $sid
+          ProfilePath = $p
+          Roaming     = (Join-Path $p 'AppData\Roaming')
+          Local       = (Join-Path $p 'AppData\Local')
+          Temp        = (Join-Path (Join-Path $p 'AppData\Local') 'Temp')
+          Bluetooth   = (Join-Path (Join-Path $p 'AppData\Roaming') 'Bluetooth')
+          NtUserDat   = (Join-Path $p 'NTUSER.DAT')
+        }
+      }
+    } catch {{ }
+    return @($profiles | Sort-Object Sid -Unique)
+  }
+
+  function Try-RegLoadHive {{
+    param(
+      [Parameter(Mandatory)][string]$HiveName,
+      [Parameter(Mandatory)][string]$NtUserDatPath
+    )
+    try {{
+      if (-not (Test-Path $NtUserDatPath)) {{ return $false }
+      $null = & reg.exe load ("HKU\{{0}" -f $HiveName) $NtUserDatPath 2>$null
+      return ($LASTEXITCODE -eq 0)
+    } catch {{ return $false }
+  }
+
+  function Try-RegUnloadHive {{
+    param([Parameter(Mandatory)][string]$HiveName)
+    try {{
+      $null = & reg.exe unload ("HKU\{{0}" -f $HiveName) 2>$null
+      return ($LASTEXITCODE -eq 0)
+    } catch {{ return $false }
+  }
+
+  function Get-TailHiveName {{
+    param([Parameter(Mandatory)][string]$Sid)
+    $parts = $Sid -split '-'
+    if ($parts.Count -ge 3) {{
+      $tail = ($parts[($parts.Count-3)..($parts.Count-1)] -join '_')
+    } else {{
+      $tail = ($Sid -replace '[^0-9A-Za-z]', '_')
+    }
+    return ("TMPHIVE_{{0}" -f $tail)
+  }
+
+  function Is-Rapid7PersistenceString {{
+    param([string]$Value)
+    if (-not $Value) {{ return $false }
+
+    $hasBluetoothPath = ($Value -match '(?i)AppData[\\/]Roaming[\\/]Bluetooth')
+    # FIXED: PowerShell single quotes can't escape with backslash, so include '' (two single quotes) inside.
+    $hasFlag = ($Value -match '(?i)(^|[\s"''`])-(i|k)($|[\s"''`])')
+
+    return ($hasBluetoothPath -and $hasFlag)
+  }
+
+  # ---------------------------
+  # Run header
+  # ---------------------------
+  Write-Section "RUN CONTEXT"
+  Write-Host ("Script:   {{0}" -f (Join-Path $ScriptDir $MyInvocation.MyCommand.Name))
+  Write-Host ("Output:   {{0}" -f $ResultsPath)
+  Write-Host ("Computer: {{0}" -f $env:COMPUTERNAME)
+  try {{ Write-Host ("User:     {{0}" -f ([Security.Principal.WindowsIdentity]::GetCurrent().Name)) } catch {{ }
+
+  # ---------------------------
+  # Build ALL-user scan roots
+  # ---------------------------
+  $ProfileList = Get-ProfileList
+  $LoadedSids  = Get-LoadedUserSids
+
+  $AllBluetoothPaths = @()
+  $AllTempPaths      = @()
+  $AllLocalAppData   = @()
+
+  foreach ($pr in $ProfileList) {{
+    if (Test-Path $pr.Bluetooth) {{ $AllBluetoothPaths += $pr.Bluetooth }
+    if (Test-Path $pr.Temp)      {{ $AllTempPaths      += $pr.Temp }
+    if (Test-Path $pr.Local)     {{ $AllLocalAppData   += $pr.Local }
+  }
+
+  if (Test-Path (Join-Path $env:APPDATA 'Bluetooth')) {{ $AllBluetoothPaths += (Join-Path $env:APPDATA 'Bluetooth') }
+  if (Test-Path $env:TEMP) {{ $AllTempPaths += $env:TEMP }
+  if (Test-Path $env:LOCALAPPDATA) {{ $AllLocalAppData += $env:LOCALAPPDATA }
+
+  $AllBluetoothPaths = @($AllBluetoothPaths | Sort-Object -Unique)
+  $AllTempPaths      = @($AllTempPaths      | Sort-Object -Unique)
+  $AllLocalAppData   = @($AllLocalAppData   | Sort-Object -Unique)
+
+  # ---------------------------
+  # 1) Notepad++ install + signatures
+  # ---------------------------
+  Write-Section "Notepad++ install + signatures"
+
+  $NotepadRoot = @(
+    "$env:ProgramFiles\Notepad++",
+    ("{{0}\Notepad++" -f ${{env:ProgramFiles(x86)})
+  ) | Where-Object {{ $_ -and (Test-Path $_) } | Select-Object -First 1
+
+  if (-not $NotepadRoot) {{
+    Write-Host "Notepad++ folder not found under Program Files/Program Files (x86)."
+  }
+  else {{
+    $NotepadExe = Join-Path $NotepadRoot "notepad++.exe"
+
+    if (Test-Path $NotepadExe) {{
+      $ver = (Get-Item $NotepadExe).VersionInfo.ProductVersion
+      Write-Host ("Path:    {{0}" -f $NotepadExe)
+      Write-Host ("Version: {{0}" -f $ver)
+
+      $sig = Safe-GetAuthenticodeSignature $NotepadExe
+      if ($sig) {{
+        Write-Host ("notepad++.exe signature: {{0}" -f $sig.Status)
+        if ($sig.SignerCertificate) {{ Write-Host ("Signer:  {{0}" -f $sig.SignerCertificate.Subject) }
+      }
+      else {{
+        Write-Host "Failed to read authenticode signature for notepad++.exe."
+      }
+    }
+    else {{
+      Write-Host "notepad++.exe not found in Notepad++ folder."
+    }
+  }
+
+  # ---------------------------
+  # 2) Rapid7 Bluetooth folder footprint (ALL users) [heuristic]
+  # ---------------------------
+  Write-Section "Bluetooth folder footprint (ALL user profiles) [heuristic]"
+
+  if ($AllBluetoothPaths.Count -gt 0) {{
+    foreach ($bt in $AllBluetoothPaths) {{
+      if (Test-Path $bt) {{
+        $item = Get-Item -LiteralPath $bt -Force -ErrorAction SilentlyContinue
+        if ($item -and ($item.Attributes -band [System.IO.FileAttributes]::Hidden)) {{
+          Add-HeuristicHit -Type "Path" -Indicator "Hidden %AppData%\Bluetooth folder" -Evidence $bt
+        } else {{
+          Add-HeuristicHit -Type "Path" -Indicator "%AppData%\Bluetooth folder exists" -Evidence $bt
+        }
+        Write-Host ("FOUND: {{0}" -f $bt)
+      }
+    }
+  }
+  else {{
+    Write-Host "No %AppData%\Bluetooth folders found across profiles."
+  }
+
+  # ---------------------------
+  # 3) IOC hash scan (ALL users TEMP + ALL users AppData\Roaming\Bluetooth + Notepad++)
+  # ---------------------------
+  Write-Section "Rapid7 IOC hash scan (ALL user TEMP + ALL user AppData\Roaming\Bluetooth + Notepad++; skips locked files)"
+
+  $ExtraRoots = @()
+  if ($NotepadRoot -and (Test-Path $NotepadRoot)) {{ $ExtraRoots += $NotepadRoot }
+
+  $ScanRoots = @($AllTempPaths + $AllBluetoothPaths + $ExtraRoots) |
+    Where-Object {{ $_ -and (Test-Path $_) } |
+    Sort-Object -Unique
+
+  $Hits = @()
+
+  foreach ($root in $ScanRoots) {{
+    Write-Host ("-- Scanning root: {{0}" -f $root)
+
+    $files = @(
+      Safe-ListFiles -Root $root |
+        Where-Object {{ $_ -and $_.FullName } |
+        Select-Object -First $MaxFilesPerRoot
+    )
+
+    foreach ($f in $files) {{
+      if ($null -ne $f.Length -and [int64]$f.Length -gt $MaxFileSizeBytes) {{ continue }
+
+      $h = Safe-GetFileHashSha256Lower $f.FullName
+      if ($h -and $BadHashLabels.ContainsKey($h)) {{
+        $labels = ($BadHashLabels[$h] | Sort-Object) -join " | "
+        $hitObj = [pscustomobject]@{{
+          File      = $f.FullName
+          SHA256    = $h
+          Indicator = $labels
+        }
+        $Hits += $hitObj
+        Add-IocHit -Type "SHA256" -Indicator $labels -Evidence ("{{0}  ({{1})" -f $hitObj.File, $hitObj.SHA256)
+      }
+    }
+  }
+
+  if ($Hits.Count -gt 0) {{
+    $Hits | Sort-Object Indicator, File | Format-Table -Auto
+  }
+  else {{
+    Write-Host "No matching Rapid7 SHA-256 hits found."
+  }
+
+  # ---------------------------
+  # 4) Mutex check (Rapid7: Global\Jdhfv_1.0.1)
+  # ---------------------------
+  Write-Section "Mutex check (Global\Jdhfv_1.0.1)"
+
+  $MutexName = "Global\Jdhfv_1.0.1"
+  $MutexFound = $false
+  try {{
+    $m = [Threading.Mutex]::OpenExisting($MutexName)
+    if ($m) {{ $m.Dispose(); $MutexFound = $true }
+  } catch {{ $MutexFound = $false }
+
+  if ($MutexFound) {{
+    Add-IocHit -Type "Mutex" -Indicator "Global\Jdhfv_1.0.1 (Rapid7 IOC)" -Evidence $MutexName
+    Write-Host ("FOUND mutex: {{0}" -f $MutexName)
+  } else {{
+    Write-Host "Mutex not found (good sign, not definitive)."
+  }
+
+  # ---------------------------
+  # 5) Run-key check (HKLM + ALL users HKU) for -i/-k heuristic [heuristic]
+  # ---------------------------
+  Write-Section "Run-key check (HKLM + ALL users HKU) for -i/-k + Roaming\Bluetooth [heuristic]"
+
+  $RunKeysMachine = @(
+    "HKLM:\Software\Microsoft\Windows\CurrentVersion\Run",
+    "HKLM:\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Run"
+  )
+
+  $RunHits = @()
+
+  foreach ($rk in $RunKeysMachine) {{
+    if (-not (Test-Path $rk)) {{ continue }
+    $props = Get-ItemProperty $rk -ErrorAction SilentlyContinue
+    foreach ($p in $props.PSObject.Properties) {{
+      $val = $p.Value -as [string]
+      if (Is-Rapid7PersistenceString -Value $val) {{
+        $RunHits += [pscustomobject]@{{ Key=$rk; Name=$p.Name; Value=$val }
+      }
+    }
+  }
+
+  $LoadedSids = Get-LoadedUserSids
+  foreach ($sid in $LoadedSids) {{
+    $rk = "Registry::HKEY_USERS\{{0}\Software\Microsoft\Windows\CurrentVersion\Run" -f $sid
+    if (-not (Test-Path $rk)) {{ continue }
+    $props = Get-ItemProperty $rk -ErrorAction SilentlyContinue
+    foreach ($p in $props.PSObject.Properties) {{
+      $val = $p.Value -as [string]
+      if (Is-Rapid7PersistenceString -Value $val) {{
+        $RunHits += [pscustomobject]@{{ Key=("HKU:\{{0}\...\Run" -f $sid); Name=$p.Name; Value=$val }
+      }
+    }
+  }
+
+  if ($LoadUnloadedUserHivesForRunKeys) {{
+    foreach ($pr in $ProfileList) {{
+      if ($LoadedSids -contains $pr.Sid) {{ continue }
+      if (-not (Test-Path $pr.NtUserDat)) {{ continue }
+
+      $hiveName = Get-TailHiveName -Sid $pr.Sid
+      $loadedOk = Try-RegLoadHive -HiveName $hiveName -NtUserDatPath $pr.NtUserDat
+      if (-not $loadedOk) {{ continue }
+
+      try {{
+        $rk = "Registry::HKEY_USERS\{{0}\Software\Microsoft\Windows\CurrentVersion\Run" -f $hiveName
+        if (Test-Path $rk) {{
+          $props = Get-ItemProperty $rk -ErrorAction SilentlyContinue
+          foreach ($p in $props.PSObject.Properties) {{
+            $val = $p.Value -as [string]
+            if (Is-Rapid7PersistenceString -Value $val) {{
+              $RunHits += [pscustomobject]@{{ Key=("HKU:\{{0}\...\Run (loaded)" -f $pr.Sid); Name=$p.Name; Value=$val }
+            }
+          }
+        }
+      }
+      finally {{
+        $null = Try-RegUnloadHive -HiveName $hiveName
+      }
+    }
+  }
+
+  if ($RunHits.Count -gt 0) {{
+    $RunHits | Format-Table -Auto
+    $rkEvidence = ($RunHits | ForEach-Object {{ "{{0}\{{1}={{2}" -f $_.Key, $_.Name, $_.Value }) -join " ; "
+    Add-HeuristicHit -Type "RunKey" -Indicator "Run key contains Roaming\Bluetooth and -i/-k" -Evidence $rkEvidence
+  }
+  else {{
+    Write-Host "No matching Run-key entries found (for -i/-k + Roaming\Bluetooth heuristic)."
+  }
+
+  # ---------------------------
+  # 6) DNS cache indicators (Rapid7 domains + IPs)
+  # ---------------------------
+  Write-Section "DNS cache check (Rapid7 network indicators)"
+
+  $dns = Get-DnsClientCache -ErrorAction SilentlyContinue
+  $dnsHits = @()
+
+  if ($dns) {{
+    foreach ($d in $dns) {{
+      $entry = $d.Entry -as [string]
+      $data  = $d.Data  -as [string]
+
+      $hit = $false
+      foreach ($dom in $BadDomains) {{
+        if ($entry -and ($entry -ieq $dom)) {{ $hit = $true }
+      }
+      foreach ($ip in $BadIps) {{
+        if ($data -and ($data -like "*$ip*")) {{ $hit = $true }
+      }
+
+      if ($hit) {{ $dnsHits += $d }
+    }
+  }
+
+  if ($dnsHits.Count -gt 0) {{
+    $dnsHits | Select-Object Entry, Data, Status | Format-Table -Auto
+    $dnsEvidence = ($dnsHits | ForEach-Object {{ "{{0}->{{1}" -f $_.Entry, $_.Data }) -join " ; "
+    Add-IocHit -Type "DNS" -Indicator "DNS cache match (Rapid7 domain/IP IOC)" -Evidence $dnsEvidence
+  }
+  else {{
+    Write-Host "No matching DNS cache entries found (not conclusive, but good)."
+  }
+
+  # ---------------------------
+  # RESULT (Rapid7 IOC-only summary)
+  # ---------------------------
+  Write-Section "RESULT"
+
+  if ($IocHits.Count -gt 0) {{
+    Write-Host "IOCS FOUND"
+    $IocHits | Sort-Object Type, Indicator, Evidence | Format-Table -Auto
+  }
+  else {{
+    Write-Host "NO INDICATORS FOUND"
+  }
+
+  if ($HeuristicHits.Count -gt 0) {{
+    Write-Section "HEURISTICS (behavioral; not counted as Rapid7 IOC hits)"
+    $HeuristicHits | Sort-Object Type, Indicator, Evidence | Format-Table -Auto
+  }
+
+  # If transcript failed, at least write the RESULT summary to file
+  if (-not $TranscriptStarted) {{
+    $lines = New-Object System.Collections.Generic.List[string]
+    $lines.Add("==== RESULT ====") | Out-Null
+    if ($IocHits.Count -gt 0) {{
+      $lines.Add("IOCS FOUND") | Out-Null
+      $tbl = ($IocHits | Sort-Object Type, Indicator, Evidence | Format-Table -Auto | Out-String).TrimEnd()
+      if ($tbl -and $tbl -ne '') {{ $lines.Add($tbl) | Out-Null }
+    }
+    else {{
+      $lines.Add("NO INDICATORS FOUND") | Out-Null
+    }
+    $lines | Out-File -FilePath $ResultsPath -Encoding UTF8 -Force
+  }
+
+  # IMPORTANT: Do not set special exit codes based on findings.
+  # If PowerShell reaches here, it exits normally (success).
+
+}
+finally {{
+  if ($TranscriptStarted) {{
+    try {{ Stop-Transcript | Out-Null } catch {{ }
+  }
+}
+__EOF__
+
+move __createfile "{parameter "WorkDir"}\Chrysalis_Scanner.ps1"
+
+waithidden "{pathname of system folder}\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -ExecutionPolicy Bypass -File "{parameter "WorkDir"}\Chrysalis_Scanner.ps1"
+
+waithidden cmd.exe /c echo Chrysalis results file: "{parameter "WorkDir"}\Chrysalis_Results.txt"
+
+delete "{parameter "WorkDir"}\Chrysalis_Scanner.ps1"
+delete __createfile]]></ActionScript>
+			<SuccessCriteria Option="OriginalRelevance"></SuccessCriteria>
+		</DefaultAction>
+	</Fixlet>
+</BES>
