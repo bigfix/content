@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
+	<Analysis>
+		<Title>pac4j-jwt-scan results</Title>
+		<Description><![CDATA[<P>This Analysis retrieves results from a running customized version of Logpresso CVE-2026-29000 pac4j-jwt Scanner 3.0.2 (2022-02-14) against BigFix endpoints.&nbsp; See the related Task to execute a scan generating these results.</P>]]></Description>
+		<Relevance>(if (name of operating system starts with "Win") then platform id of operating system != 3 else true) AND (if exists property "in proxy agent context" then (not in proxy agent context) else true) AND (if exists property "android" of type "operating system" then (not android of operating system) else true)</Relevance>
+		<Relevance>exists files "results-pac4j-jwt-scan.txt" of folders "BPS-Scans" of parent folders of parent folders of client folders of sites "actionsite"</Relevance>
+		<Category></Category>
+		<Source></Source>
+		<SourceReleaseDate>2026-03-06</SourceReleaseDate>
+		<MIMEField>
+			<Name>x-fixlet-first-propagation</Name>
+			<Value>Fri, 06 Mar 2026 21:09:42 +0000</Value>
+		</MIMEField>
+		<MIMEField>
+			<Name>x-fixlet-modification-time</Name>
+			<Value>Fri, 06 Mar 2026 21:09:42 +0000</Value>
+		</MIMEField>
+		<Domain>BESC</Domain>
+		<Property Name="pac4j-jwt Scan - Vulnerable File List" ID="1" EvaluationPeriod="PT1H">unique values of (it as trimmed string) of preceding texts of firsts "," of following texts of firsts "vulnerability in " of (if exists property "locked lines" then locked lines of it else lines of it) whose (it as lowercase does not contain " (mitigated)" as lowercase) of files "results-pac4j-jwt-scan.txt" of folders "BPS-Scans" of parent folders of parent folders of client folders of sites "actionsite"</Property>
+		<Property Name="pac4j-jwt Scan - Scan Technology" ID="2" EvaluationPeriod="PT1H">unique values of (it as trimmed string) of (if exists property "locked lines" then locked lines 1 of it else lines 1 of it)  of files "results-pac4j-jwt-scan.txt" of folders "BPS-Scans" of parent folders of parent folders of client folders of sites "actionsite"</Property>
+		<Property Name="pac4j-jwt Scan - Last Scan Time" ID="3" EvaluationPeriod="PT1H">modification times of files "results-pac4j-jwt-scan.txt" of folders "BPS-Scans" of parent folders of parent folders of client folders of sites "actionsite"</Property>
+		<Property Name="pac4j-jwt Scan - Vulnerable File Count" ID="4" EvaluationPeriod="PT1H">unique values of (it as trimmed string as integer) of (preceding text of first " " of following text of first "Found " of it) of (if exists property "locked lines" then locked lines of it else lines of it) whose (it starts with "Found " and it ends with " vulnerable files" and it does not end with "potentially vulnerable files") of files "results-pac4j-jwt-scan.txt" of folders "BPS-Scans" of parent folders of parent folders of client folders of sites "actionsite"</Property>
+		<Property Name="pac4j-jwt Scan - Potentially Vulnerable File Count" ID="5" EvaluationPeriod="PT1H">unique values of (it as trimmed string as integer) of (preceding text of first " " of following text of first "Found " of it) of (if exists property "locked lines" then locked lines of it else lines of it) whose (it starts with "Found "  and it ends with "potentially vulnerable files") of files "results-pac4j-jwt-scan.txt" of folders "BPS-Scans" of parent folders of parent folders of client folders of sites "actionsite"</Property>
+		<Property Name="pac4j-jwt Scan - Mitigated File Count" ID="6" EvaluationPeriod="PT1H">unique values of (it as trimmed string as integer) of (preceding text of first " " of following text of first "Found " of it) of (if exists property "locked lines" then locked lines of it else lines of it) whose (it starts with "Found "  and it ends with "mitigated files") of files "results-pac4j-jwt-scan.txt" of folders "BPS-Scans" of parent folders of parent folders of client folders of sites "actionsite"</Property>
+		<Property Name="pac4j-jwt Scan - File Result Details" ID="7" EvaluationPeriod="PT1H">unique values of (it as trimmed string) of (if exists property "locked lines" then locked lines of it else lines of it) whose (it starts with "[") of files "results-pac4j-jwt-scan.txt" of folders "BPS-Scans" of parent folders of parent folders of client folders of sites "actionsite"</Property>
+		<Property Name="pac4j-jwt Scan - File Scan Count" ID="8" EvaluationPeriod="PT1H">(it as integer) of following texts of lasts " " of preceding texts of lasts " files" of (if exists property "locked lines" then locked lines of it else lines of it) whose (it starts with "Scanned " and it ends with " files") of files "results-pac4j-jwt-scan.txt" of folders "BPS-Scans" of parent folders of parent folders of client folders of sites "actionsite"</Property>
+		<Property Name="pac4j-jwt Scan - Scan Duration" ID="9" EvaluationPeriod="PT1H">following texts of firsts "Completed in " of (if exists property "locked lines" then locked lines of it else lines of it) whose (it starts with "Completed in ") of files "results-pac4j-jwt-scan.txt" of folders "BPS-Scans" of parent folders of parent folders of client folders of sites "actionsite"</Property>
+		<Property Name="pac4j-jwt Scan - pac4j-jwt versions found" ID="10" EvaluationPeriod="PT1H">(following texts of lasts "," of it as trimmed string) of (if exists property "locked lines" then locked lines of it else lines of it) whose (it starts with "[") of files "results-pac4j-jwt-scan.txt" of folders "BPS-Scans" of parent folders of parent folders of client folders of sites "actionsite"</Property>
+	</Analysis>
+</BES>

@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
+	<Task>
+		<Title>Run: pac4j-jwt-scan v3.0.2 - Universal JAR - Download JRE - SCAN only</Title>
+		<Description><![CDATA[<P>This task will: </P>
+<UL>
+<LI>Download a platform specific JRE or JDK 
+<LI>Download a pac4j-jwt-scan utility JAR file from Logpresso 
+<LI>Run the pac4j-jwt-scan utility JAR with the platform specific JRE or JDK 
+<LI>Save results to a file. Results available in an analysis 
+<LI>Delete the platform specific JRE or JDK when the scan is completed. </LI></UL>
+<P>The following platforms are currently excluded: </P>
+<UL>
+<LI>Windows 2012 or older, Windows 8 or older 
+<LI>Linux Z and Linux PowerPC Big Endian 
+<LI>HP-UX </LI></UL>
+<P>The scan should not be deployed all at once on all systems due to potential impact to shared network and disk resources. </P>
+<P>The scanner will try to avoid common network file shares and will not follow symlinks to help prevent common potential problems, but this is not a guarantee that all cases are covered. If you know you need to exclude specific paths, those can be added in the field below. </P>
+<P>This scan will help with detection only.</P><BR>
+<TABLE>
+<TBODY>
+<TR>
+<TD><LABEL for=exclusionlist>List additional directories to be excluded from the scan, one per line:</LABEL> </TD>
+<TD><TEXTAREA id=exclusionlist rows=10 cols=40 name=exclusionlist></TEXTAREA></TD></TR></TBODY></TABLE><script>document.body.ontakeaction = function () {
+    TakeFixletAction(Relevance("id of current fixlet"), Relevance("id of current bes site"), "Action1", {
+        exclusionlist: document.getElementById("exclusionlist").value
+    }, {});
+    return false;
+}</script> 
+<P></P>
+<P>
+<H3>NOTE:</H3><STRONG>This version of the scan fixlet downloads the JAR version of pac4j-jwt-scan</STRONG> <STRONG>as well as a temporary Java Runtime from Adoptium/AdoptOpenJDK to execute the scanner.</STRONG> 
+<P></P>]]></Description>
+		<Relevance>(if (name of operating system starts with "Win") then platform id of operating system != 3 else true) AND (if exists property "in proxy agent context" then (not in proxy agent context) else true) AND (if exists property "android" of type "operating system" then (not android of operating system) else true)</Relevance>
+		<Relevance><![CDATA[( if (name of operating system as lowercase contains "win") then (version of operating system >= "6.3") else TRUE ) AND ( if (name of operating system as lowercase contains "linux") AND ((architecture of it = "s390x") of operating system OR (architecture of it = "ppc64") of operating system) then FALSE else TRUE ) AND (name of operating system does not start with "HP-UX")]]></Relevance>
+		<Category></Category>
+		<DownloadSize>662909</DownloadSize>
+		<Source>pac4j-jwt-scan</Source>
+		<SourceID></SourceID>
+		<SourceReleaseDate>2025-03-06</SourceReleaseDate>
+		<SourceSeverity></SourceSeverity>
+		<CVENames></CVENames>
+		<SANSID></SANSID>
+		<MIMEField>
+			<Name>action-ui-metadata</Name>
+			<Value>{ "version":"3.0.2","size":662909 }</Value>
+		</MIMEField>
+		<MIMEField>
+			<Name>x-fixlet-first-propagation</Name>
+			<Value>Fri, 06 Mar 2026 21:09:42 +0000</Value>
+		</MIMEField>
+		<MIMEField>
+			<Name>x-fixlet-modification-time</Name>
+			<Value>Fri, 06 Mar 2026 21:09:42 +0000</Value>
+		</MIMEField>
+		<Domain>BESC</Domain>
+		<DefaultAction ID="Action1">
+			<Description>
+				<PreLink>Click </PreLink>
+				<Link>here</Link>
+				<PostLink> to run pac4j-jwt-scan v3.0.2.</PostLink>
+			</Description>
+			<ActionScript MIMEType="application/x-Fixlet-Windows-Shell"><![CDATA[//parameter "exclusionlist" is provided in the Description tab
+begin prefetch block
+	//
+	// Please note that you must precache the file b60cf0e5ca93003346f104a52a3cdff5af4aa4f8 on your BigFix Root Server's sha1 folder 
+	// For example: BigFix Enterprise\BES Server\wwwrootbes\bfmirror\downloads\sha1\ OR /var/opt/BESServer/wwwrootbes/bfmirror/downloads/sha1
+	//
+	// Download pac4j-jwt-scan:
+	add prefetch item name=pac4j-jwt-scan.jar sha1=b60cf0e5ca93003346f104a52a3cdff5af4aa4f8 size=662909 url=https://MANUAL_BES_CACHING_REQUIRED/pac4j-jwt-scanner-3.0.2-package.jar sha256=a4b45d30840a1ae4fcb689437a49249329c42f8328efaccfc0ea7696a236fb49
+
+		// trap for 'x64 of operating system' property existing only on Windows
+		if {if windows of operating system then x64 of operating system else false}
+			add prefetch item name=jre.zip sha1=359ef250b3e78716cee4669b0182f0c1c28261c3 size=39046089 url=https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u312-b07/OpenJDK8U-jre_x64_windows_hotspot_8u312b07.zip sha256=a4623365d70e7bc969e84b7f29b6b2eecb6c0686863ed67651506e2b5adf43b0
+			add prefetch item name=unzip.exe sha1=84debf12767785cd9b43811022407de7413beb6f size=204800 url=https://software.bigfix.com/download/redist/unzip-6.0.exe sha256=2122557d350fd1c59fb0ef32125330bde673e9331eb9371b454c2ad2d82091ac
+		endif
+		if {if windows of operating system then not x64 of operating system else false}
+			add prefetch item name=jre.zip sha1=bf419f8c9231c34f0ffb9564b5f7f6690f596fd9 size=37494360 url=https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u312-b07/OpenJDK8U-jre_x86-32_windows_hotspot_8u312b07.zip sha256=789cfa21858156084020ee885ade643556dc57ddec2b44745b5489edb7945b64
+			add prefetch item name=unzip.exe sha1=84debf12767785cd9b43811022407de7413beb6f size=204800 url=https://software.bigfix.com/download/redist/unzip-6.0.exe sha256=2122557d350fd1c59fb0ef32125330bde673e9331eb9371b454c2ad2d82091ac
+		endif
+	
+		if {if exists property "mac" of type "operating system" then mac of operating system else name of operating system as lowercase as lowercase starts with "mac"}
+			add prefetch item name=jre.tar.gz sha1=85bcaf8ab11b50e8ef2adda7d67751d504a46e70 size=45027148 url=https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u312-b07/OpenJDK8U-jre_x64_mac_hotspot_8u312b07.tar.gz sha256=c8cf94118bd073c3caf0cde2389993ef7f482b46daa7b6f6d680f90d6de1dd3d
+		endif
+	
+		if {if name of operating system as lowercase starts with "linux" then architecture of operating system = "x86_64" else false}
+			add prefetch item name=jre.tar.gz sha1=8b835bfff7f67d2a097344e95b7221d2d3c048ef size=41286015 url=https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u312-b07/OpenJDK8U-jre_x64_linux_hotspot_8u312b07.tar.gz sha256=18fd13e77621f712326bfcf79c3e3cc08c880e3e4b8f63a1e5da619f3054b063
+		endif
+	
+		if {(name of operating system as lowercase starts with "linux") AND (exists match (regex "^i[3-9]86$") of architecture of operating system)}
+			add prefetch item name=jre.tar.gz sha1=ec336b1ae9027966da050c6678123baf6e7bc581 size=45651626 url=https://cdn.azul.com/zulu/bin/zulu8.58.0.13-ca-jre8.0.312-linux_i686.tar.gz sha256=d76850b3a7cfd9930b26879ef89b89dc1f1f2de063504fdbce212c7facca7735
+		endif
+	
+		if {(name of operating system as lowercase starts with "linux") AND ((it = "armv7l") of architecture of operating system)}
+			// Download for Raspberry Pi
+			add prefetch item name=jre.tar.gz sha1=fb502032c1c6d29da361a6032469a787aae59d58 size=38706993 url=https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u312-b07/OpenJDK8U-jre_arm_linux_hotspot_8u312b07.tar.gz sha256=5f37cbf311a5c2928aff8e83a82aebcf37b5911b193b5ab8538108381dcd6276
+		endif
+	
+		if {(name of operating system as lowercase contains "linux") AND ((architecture of it = "ppc64le") of operating system)}
+			// Linux PowerPC [RHEL, Ubuntu, SuSe]
+			add prefetch item name=jre.tar.gz sha1=05996686e35c8891955a7ac09414b9097ee80653 size=100571080 url=https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u312-b07/OpenJDK8U-jdk_ppc64le_linux_hotspot_8u312b07.tar.gz sha256=ddce3f067eab6fd98bb2a8ea3d18de6b09ea41d10382c76ad22bd3e7895951cf
+		endif
+	
+		if {exists match (regex "(AIX|AIX VIOS)") of name of operating system and (if exists property "current technology level" then current technology level of operating system >= "7100-04" else false)}
+			add prefetch item name=jre.tar.gz sha1=e42ea144018ce547a13e85e4a2692b2fc0f45eeb size=42806130 url=https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u312-b07/OpenJDK8U-jre_ppc64_aix_hotspot_8u312b07.tar.gz sha256=735c2afd5fc4573a2cd3f1629f1fbc6607849f95230a494560037fa40bdc9e03
+		endif
+		if {((exists match (regex "SunOS") of it ) of name of operating system) AND (if exists properties whose(it as string contains "type of <processor>") then (type of main processor as string contains "i386") else false)}
+			add prefetch item name=jre.tar.gz sha1=8ab58046126953bb9acf3aa6b4d18d978e13e6d6 size=50196314 url=https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u312-b07/OpenJDK8U-jre_x64_solaris_hotspot_8u312b07.tar.gz sha256=b4a3b701bfe0f529743d4260f1c776cc2bc95b80456bee539e0bc1931cba6117
+		endif
+	
+		if {((exists match (regex "SunOS") of it ) of name of operating system) AND (if exists properties whose(it as string contains "type of <processor>") then (type of main processor as string contains "sparc") else false)}
+			add prefetch item name=jre.tar.gz sha1=513d89893df13f14e9b5e76a2f3134dd895fd1ef size=53232710 url=https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u312-b07/OpenJDK8U-jre_sparcv9_solaris_hotspot_8u312b07.tar.gz sha256=62db15678d4212307c3ccb6743cf44636d81cf08cbf150517a86f65f17f8900d
+		endif
+	
+		// HP-UX: (MANUAL_CACHING_REQUIRED)
+		// prefetch 2106_Java80_1.8.0.22.00_HP-UX_B.11.31_IA.depot sha1:b87d2dd25794360238a38fda132cb799a65b6d18 size:144097280 https://MANUAL_CACHING_REQUIRED/2106_Java80_1.8.0.22.00_HP-UX_B.11.31_IA.depot sha256:fa48555266f5ca0223f03a86485ae0908177133e1d5bd993632c23678833e9ae
+	collect prefetch items
+end prefetch block
+
+utility __Download/pac4j-jwt-scan.jar
+if {exists files "__Download\unzip.exe"}
+  utility __Download/unzip.exe
+endif
+if {exists files "__Download\jre.zip"}
+  utility __Download/jre.zip
+endif
+if {exists files "__Download/jre.tar.gz"}
+  utility __Download/jre.tar.gz
+endif
+
+folder create "{pathname of parent folder of parent folder of client folder of site "actionsite"}/BPS-Scans"
+
+// 'folder delete' fails in certain symlink situations - as used by some JREs.  Use OS commands rather tha ActionScript to remove it.
+//folder delete "{pathname of parent folder of parent folder of client folder of site "actionsite"}/BPS-Scans/jre"
+
+folder create "{pathname of parent folder of parent folder of client folder of site "actionsite"}/BPS-Scans/jre"
+
+parameter "BPSFolder"="{pathname of folder "BPS-Scans" of parent folder of parent folder of client folder of site "actionsite"}{if windows of operating system then "\" else "/"}"
+parameter "JREFolder"="{pathname of folder "jre" of folder "BPS-Scans" of parent folder of parent folder of client folder of site "actionsite"}"
+parameter "ListFile"="{parameter "BPSFolder"}results-pac4j-jwt-scan.txt"
+parameter "ExclusionFile"="{parameter "BPSFolder"}pac4j-jwt-path-exclusions.txt"
+parameter "ReportJSONFile"="{parameter "BPSFolder"}pac4j-jwt-report.json"
+
+
+// --- Begin JRE extraction
+if {windows of operating system}
+  waithidden __Download/unzip.exe -oq "__Download/jre.zip" -d "{parameter "JREFolder"}"
+  delete "__Download/jre.zip"
+  delete "__Download/unzip.exe"
+
+
+else
+  // Some UNIX versions require use of the shell to extract JRE, so shell must be known early
+  // Get shell binary, should return /bin/sh in most cases:
+  parameter "shell_bin" = "{  tuple string items 0 of concatenations ", " of ( pathnames of files "/bin/sh"; pathnames of files whose(name of it as lowercase = "sh" OR name of it as lowercase = "sh.exe") of (folders it) of unique values of (it as trimmed string) of substrings separated by (";";":") of values of (variables "PATH" of it ) of environments) }"
+
+  // If script stops here, we did not find a shell
+  continue if {parameter "shell_bin" as trimmed string != ""}
+
+  parameter "tar"="{tuple string items 0 of concatenation ", " of pathnames of files "tar" of folders ("/bin";"/sbin";"/usr/sbin"; unique values of (it as trimmed string) of substrings separated by (";";":") of values of (variables "PATH" of it ) of environments)}"
+  // If script stops here, we did not find a tar command
+  continue if {parameter "tar" as trimmed string != ""}
+
+  // Some UNIX flavors cannot decompress directly via tar, and need a gunzip or unzip command
+  parameter "unzip"="{tuple string items 0 of concatenations ", " of pathnames of files ("gunzip"; "unzip") of folders ("/bin";"/usr/bin";unique values of (it as trimmed string) of substrings separated by (";";":") of values of (variables "PATH" of it ) of environments)}"
+
+
+  if {exists match (regex "(AIX|AIX VIOS)") of name of operating system and (if exists property "current technology level" then current technology level of operating system >= "7100-04" else false)}
+    // AIX extraction
+	// If action stops here we may not have gunzip / unzip available
+
+	continue if {parameter "unzip" as trimmed string != ""}
+
+    wait {parameter "unzip"} "__Download/jre.tar.gz"
+	wait {parameter "tar" } -xf "__Download/jre.tar" -C "{parameter "JREFolder"}"
+	delete "__Download/jre.tar.gz"
+	delete "__Download/jre.tar"
+
+  elseif {exists match (regex "SunOS") of name of operating system}
+    // SunOS extraction for i386 or Sparc
+	// If action stops here we may not have gunzip / unzip available
+	continue if {parameter "unzip" as trimmed string != ""}
+
+	// SunOS version of tar does not support specifying output folder, so unzip in-place and then use shell redirection to relocate the untar
+	wait {parameter "unzip"} "__Download/jre.tar.gz"
+	wait {parameter "shell_bin"} -c "( cd '{parameter "BPSFolder"}jre' && tar xf - ) < __Download/jre.tar"
+	delete "__Download/jre.tar.gz"
+	delete "__Download/jre.tar"
+
+  else
+    // Unless otherwise specified, our UNIX/Linux variant version of 'tar' should support both decompress and output folder spec
+    // extract temporary JRE
+    wait {parameter "tar"} -xzvf "__Download/jre.tar.gz" -C "{parameter "JREFolder"}"
+	delete "__Download/jre.tar.gz"
+	delete "__Download/jre.tar"
+  endif
+endif
+
+
+// --- End JRE extraction
+//locate Java binary
+// If script fails here, the JRE extraction may have failed.
+parameter "Java_bin"="{tuple string item 0 of (concatenation ", " of pathnames of files ("java";"java.exe") of folders ("bin";"Contents/Home/bin") of (it; folders of it) of folders of folders (parameter "JREFolder"))}"
+continue if {exists file (parameter "Java_bin")}
+
+// Setup pac4j-jwt-scan.jar
+if { exists files "pac4j-jwt-scan.jar" of folders (parameter "BPSFolder")}
+  delete "{pathname of file "pac4j-jwt-scan.jar" of folder (parameter "BPSFolder")}"
+
+endif
+
+// Copy the scanner JAR file to client folder
+copy __Download/pac4j-jwt-scan.jar "{parameter "BPSFolder"}/pac4j-jwt-scan.jar"
+
+// Delete previous items
+delete "{parameter "ListFile"}"
+delete __appendfile
+delete "{parameter "ExclusionFile"}"
+
+//build exclusions list
+appendfile {concatenation (if windows of operating system then "%0d%0a" else "%0a") of (unique values of (it as trimmed string) whose(it != "") of substrings separated by "%0a" of (parameter "exclusionlist" | ""))}
+
+appendfile {concatenation (if windows of operating system then "%0d%0a" else "%0a") of ("/mnt";"/dev";"/cdrom")}
+
+if {exists properties "type" of types "filesystem"}
+ appendfile {concatenation (if windows of operating system then "%0d%0a" else "%0a") of mount points of filesystems whose (type of it != "DRIVE_FIXED" ) }
+endif
+
+//mac-specific
+if {exists properties "type" of types "volume"}
+ appendfile {concatenation (if windows of operating system then "%0d%0a" else "%0a") of (it as string) of volumes whose (type of it != "DRIVE_FIXED" ) }
+endif
+
+if {exists properties "filesystem type" of types "filesystem"}
+ appendfile {concatenation (if windows of operating system then "%0d%0a" else "%0a") of mount points of filesystems whose (filesystem type of it is contained by set of ("cgroup";"cifs";"nfs";"nfs3";"nfs4";"cgroup2";"sysfs";"proc";"cpuset") ) }
+endif
+
+copy __appendfile "{parameter "ExclusionFile"}"
+
+if {windows of operating system}
+  // Execute scan
+  delete "{parameter "ReportJSONFile"}"
+  runhidden cmd.exe /c "cd "{parameter "BPSFolder"}" & "{parameter "Java_bin"}" -jar .\pac4j-jwt-scan.jar --silent --all-drives --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660,autofs,afs --exclude-config "{parameter "ExclusionFile"}" --report-json --report-path "{parameter "ReportJSONFile"}"  > "{parameter "ListFile"}" & rd /s /q "{parameter "JREFolder"}""
+else
+  // Run pac4j-jwt-scan scan or remediation:
+  // WARNING: this attempts to exclude network shares, but might not be perfect.
+  delete "{parameter "ReportJSONFile"}"
+  run {parameter "shell_bin"} -c "cd '{parameter "BPSFolder"}' ; '{parameter "Java_bin"}' -jar ./pac4j-jwt-scan.jar --silent --no-symlink --no-empty-report --exclude-fs nfs,nfs3,nfs4,cifs,tmpfs,devtmpfs,iso9660,autofs,afs --exclude-config '{parameter "ExclusionFile"}' --report-json --report-path '{parameter "ReportJSONFile"}'  /  > '{parameter "ListFile"}' ; rm -rf '{parameter "JREFolder"}'"
+endif
+
+
+// Wait up to 30 seconds for the logfile to be created to check successful startup
+parameter "StartTime"="{now}"
+pause while {not exists file (parameter "ListFile") and now - (parameter "StartTime" as time) < 30 * second }
+// Check that an output log file has been created as an indicator that the scan has launched successfully
+continue if {exists file (parameter "ListFile") whose (modification time of it >= active start time of action)}
+
+// End]]></ActionScript>
+		</DefaultAction>
+	</Task>
+</BES>
