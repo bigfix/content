@@ -34,16 +34,16 @@
 		<Relevance>(if (name of operating system starts with "Win") then platform id of operating system != 3 else true) AND (if exists property "in proxy agent context" then (not in proxy agent context) else true) AND (if exists property "android" of type "operating system" then (not android of operating system) else true)</Relevance>
 		<Relevance><![CDATA[( if (name of operating system as lowercase contains "win") then (version of operating system >= "6.3") else TRUE ) AND ( if (name of operating system as lowercase contains "linux") AND ((architecture of it = "s390x") of operating system OR (architecture of it = "ppc64") of operating system) then FALSE else TRUE ) AND (name of operating system does not start with "HP-UX")]]></Relevance>
 		<Category></Category>
-		<DownloadSize>662909</DownloadSize>
+		<DownloadSize>2959066</DownloadSize>
 		<Source>pac4j-jwt-scan</Source>
 		<SourceID></SourceID>
-		<SourceReleaseDate>2025-03-06</SourceReleaseDate>
+		<SourceReleaseDate>2025-03-10</SourceReleaseDate>
 		<SourceSeverity></SourceSeverity>
 		<CVENames></CVENames>
 		<SANSID></SANSID>
 		<MIMEField>
 			<Name>action-ui-metadata</Name>
-			<Value>{ "version":"3.0.2","size":662909 }</Value>
+			<Value>{ "version":"3.0.2","size":2959066 }</Value>
 		</MIMEField>
 		<MIMEField>
 			<Name>x-fixlet-first-propagation</Name>
@@ -51,7 +51,7 @@
 		</MIMEField>
 		<MIMEField>
 			<Name>x-fixlet-modification-time</Name>
-			<Value>Fri, 06 Mar 2026 21:09:42 +0000</Value>
+			<Value>Tue, 10 Mar 2026 14:59:18 +0000</Value>
 		</MIMEField>
 		<Domain>BESC</Domain>
 		<DefaultAction ID="Action1">
@@ -62,12 +62,8 @@
 			</Description>
 			<ActionScript MIMEType="application/x-Fixlet-Windows-Shell"><![CDATA[//parameter "exclusionlist" is provided in the Description tab
 begin prefetch block
-	//
-	// Please note that you must precache the file b60cf0e5ca93003346f104a52a3cdff5af4aa4f8 on your BigFix Root Server's sha1 folder 
-	// For example: BigFix Enterprise\BES Server\wwwrootbes\bfmirror\downloads\sha1\ OR /var/opt/BESServer/wwwrootbes/bfmirror/downloads/sha1
-	//
 	// Download pac4j-jwt-scan:
-	add prefetch item name=pac4j-jwt-scan.jar sha1=b60cf0e5ca93003346f104a52a3cdff5af4aa4f8 size=662909 url=https://MANUAL_BES_CACHING_REQUIRED/pac4j-jwt-scanner-3.0.2-package.jar sha256=a4b45d30840a1ae4fcb689437a49249329c42f8328efaccfc0ea7696a236fb49
+	add prefetch item name=pac4j-jwt-scan.jar sha1=fd8a064038cd163284f2e2758d9a35bb32f1b417 size=2959066 url=https://software.bigfix.com/download/bes/util/pac4j-jwt-scanner-3.0.2-package.jar sha256=8b7dc54e9ccd9f78c252915c205a3aa882d0c4fa4c74cbb727371d64441d3271
 
 		// trap for 'x64 of operating system' property existing only on Windows
 		if {if windows of operating system then x64 of operating system else false}
